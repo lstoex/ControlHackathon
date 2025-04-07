@@ -1,6 +1,6 @@
 # Open Loop Planning
-We are considering for a real-life system, which we model using an ordinary differential equation 
-$$\dot{x} = f(x,u)$$
+We are considering for a real-life system, which we model using an ordinary differential equation\
+$$\dot{x} = f(x,u)$$\
 with state $x\in \mathbb{R}^{n_x}$, and control $u\in \mathbb{R}^{n_u}$. We want to find a find a control strategy $u(t)$ such that the trajectory $x(t)$ that the system (hopefully) follows in the future, is optimal in the sense of some cost function.
 ## Discrete Dynamics
 
