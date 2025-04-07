@@ -46,7 +46,8 @@ List of Scenarios:
 
 List of Methods:
 - Closed Loop
-	- [[(Method) LQR Controller]]
+	- [LQR](documentation/%28Method%29%20LQR%20Controller.md)
+	- 
 	- [[(Method) Open Loop Planning]]
 - Open Loop
 	- [[(Method) Model Predictive Control]]
