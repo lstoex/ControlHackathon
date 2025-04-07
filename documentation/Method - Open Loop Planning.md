@@ -19,16 +19,9 @@ x_1 = F(x_0, u_0)
 ## Discrete Optimal Control Problem
 ![[_misc/DOCP.png]]
 
-Given the system model and constraints, a quite generic discrete time optimal control problem can be formulated as the following constrained NLP:
+Given the system model and constraints, a quite generic discrete time optimal control problem can be formulated as the following constrained NLP:\
+$$\begin{align}\min_{x_0,u_0,x_1,u_1} &\sum_{k=0}^{N-1} l(x_k,u_k) + E(x_N) \\\text{s.t.}\quad & 0 = x_0 - \bar{x}_0 \\&  0 = x_{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1 \\&  0 \geq h(x_k, u_k), \quad &k=0,\dots,N-1 \end{align}$$\
 
-$$
-\begin{align}
-
-\min_{x_0,u_0,x_1,u_1} &\sum_{k=0}^{N-1} l(x_k,u_k) + E(x_N) \\
-\text{s.t.}\quad & 0 = x_0 - \bar{x}_0 \\&  0 = x_{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1 \\
-&  0 \geq h(x_k, u_k), \quad &k=0,\dots,N-1 
-\end{align}
-$$
 - The decision variables of the problem contain the *discrete* state and control trajectories on the time grid. We have $N+1$ variables 
    $$x_0,x_1, \dots, x_N$$for the state trajectory each of which is of a vector of $n_x$ variables, and $N$ variables for  the control trajectory:
    $$u_0, u_1, \dots, u_{N-1}$$
@@ -41,8 +34,7 @@ $$
   $$ \sum (x_k - \bar{x}_k)^\top Q (x_k - \bar{x}_k) + (u_k - \bar{u}_k)^\top R (u_k - \bar{u}_k)$$when we want to find a control which makes the system follow a given reference of states $\bar{x}_0, \bar{x}_1, \dots,$  and controls  $\bar{u}_0, \bar{u}_1, \dots,$. Here $Q$ and $R$ are (typically diagonal) *weighting matrices*, to emphasise the importance of either control or state tracking.
 
 ## Practical Solution of the Nonlinear Programm
-The nonlinear program above is of the general form
-
+The nonlinear program above is of the general form\
 $$\begin{align}\min_w\quad & f(w) \\
 \text{s.t.}\quad & 0 = g(w) \\
 & 0 \leq h(w)
