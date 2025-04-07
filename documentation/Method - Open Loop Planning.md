@@ -6,8 +6,12 @@ with state $x\in \mathbb{R}^{n_x}$, and control $u\in \mathbb{R}^{n_u}$. We want
 
 For simplicity, we assume in the following that we approximate the continuous state trajectory $x(t)$ on grid points $t_0, t_1, \dots, t_k, t_{k+1}, \dots$ as $x(t_k) \approx x_k$. Also, for simplicity, we assume that over each interval the control is constant: $u(t) = u_k, \forall  t \in [t_k, t_{k+1}]$, and that the intervals have the same constant duration, $h = t_{k+1} - t_k$.
 Then we can find discrete dynamics:
+
 $$
-x_{k+1} = F(x_k, u_k)$$ which can be obtained from a continuous-time ODE using a single (or multiple) steps of a one-step integration method. A commonly used integration method is the Runge-Kutta method of order 4: 
+x_{k+1} = F(x_k, u_k)
+$$ 
+
+which can be obtained from a continuous-time ODE using a single (or multiple) steps of a one-step integration method. A commonly used integration method is the Runge-Kutta method of order 4: 
 $$
 x_{k+1} = ...
 $$
@@ -20,9 +24,15 @@ x_1 = F(x_0, u_0)
 ![[_misc/DOCP.png]]
 
 Given the system model and constraints, a quite generic discrete time optimal control problem can be formulated as the following constrained NLP:\
-\
-$$\begin{align}\min_{x_0,u_0,x_1,u_1} &\sum_{k=0}^{N-1} l(x_k,u_k) + E(x_N) \\ \text{s.t.}\quad & 0 = x_0 - \bar{x}0 \\& 0 = x{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1 \\& 0 \geq h(x_k, u_k), \quad &k=0,\dots,N-1 \end{align}$$\
-\
+
+$$
+\begin{aligned}
+\min_{x_0,u_0,x_1,u_1} &\sum_{k=0}^{N-1} l(x_k,u_k) + E(x_N) \\
+\text{s.t.}\quad & 0 = x_0 - \bar{x}0 \\
+& 0 = x{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1 \\
+& 0 \geq h(x_k, u_k), \quad &k=0,\dots,N-1 
+\end{aligned}
+$$
 
 - The decision variables of the problem contain the *discrete* state and control trajectories on the time grid. We have $N+1$ variables 
    $$x_0,x_1, \dots, x_N$$for the state trajectory each of which is of a vector of $n_x$ variables, and $N$ variables for  the control trajectory:
@@ -37,10 +47,14 @@ $$\begin{align}\min_{x_0,u_0,x_1,u_1} &\sum_{k=0}^{N-1} l(x_k,u_k) + E(x_N) \\ \
 
 ## Practical Solution of the Nonlinear Programm
 The nonlinear program above is of the general form\
-$$\begin{align}\min_w\quad & f(w) \\
+
+$$
+\begin{aligned}\min_w\quad & f(w) \\
 \text{s.t.}\quad & 0 = g(w) \\
 & 0 \leq h(w)
-\end{align}$$
+\end{aligned}
+$$
+
 with variables $w$, objective function $f$, equality constraints $g$ and inequality constraints $h$. Such an NLP can be formulated and solved using a number of tools:
 - The `Python/Matlab` framework [`CasAdi`](https://web.casadi.org/) which, when installed for Python using `pip install casadi` comes natively with the very robust solver `IPOPT`which is called using the `nlpsol` function.
 - The Python library `scipy`,  provides the function [`scipy.optimize.minimize`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html).
