@@ -16,6 +16,11 @@ Timetable
 - Day 2, 13:30 – 14:15, Presentation of hackathon results by participants
 Groups of 2-4 students, supervised by PhD students and Professors.
 
+# Tools
+- Python with standard libraries
+	- Numpy
+	- Matplotlib
+- We use the python framework [`CasAdi`](https://web.casadi.org/) to formulate OCPs
 # Scenarios
 For every scenario, we prepared python code that implements:
 - the model equations
@@ -33,3 +38,15 @@ For every scenario, we prepared python code that implements:
   ```python
 	scenario.closedLoopSimulation(x_0, u_t, t_f=10)`
 	```
+
+
+List of Scenarios:
+- [[(Scenario) 2D-XY Bicycle Control]]
+- [[(Scenario) 2D-XZ Drone Control]]
+
+List of Methods:
+- Closed Loop
+	- [[(Method) LQR Controller]]
+	- [[(Method) Open Loop Planning]]
+- Open Loop
+	- [[(Method) Model Predictive Control]]
