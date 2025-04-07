@@ -37,27 +37,31 @@ x_1 = F(x_0, u_0)
 <img src="_misc/DOCP.png" width="700"/>
 
 Given the system model and constraints, a quite generic discrete time optimal control problem can be formulated as the following constrained NLP:
-
+<p>
 $$
 \begin{aligned}
-
-\min_{x_0,u_0,x_1,u_1} &\sum_{k=0}^{N-1} l(x_k,u_k) + E(x_N) \\
-\text{s.t.}\quad & 0 = x_0 - \bar{x}_0 \\&  0 = x_{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1 \\
+\min_{x_0,u_0,x_1,u_1} &\sum_{k=0}^{N-1} l(x_k,u_k) + E(x_N)  \\
+\text{s.t.} \quad & 0 = x_0 - \bar{x}_{0} \\\\
+&  0 = x_{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1 \\
 &  0 \leq h(x_k, u_k), \quad &k=0,\dots,N-1 
 \end{aligned}
 $$
+</p>
 
-- The decision variables of the problem contain the *discrete* state and control trajectories on the time grid. We have $N+1$ variables 
-	$$\begin{aligned}x_0,x_1, \dots, x_N\end{aligned}$$ 
+- The decision variables of the problem contain the *discrete* state and control trajectories on the time grid. We have $N+1$ variables 	
+<p>$$
+  \begin{aligned}
+  x_0,x_1, \dots, x_N
+  \end{aligned}
+  $$</p>
+  
 	
-	for the state trajectory each of which is of a vector of $n_x$ variables, and $N$ variables for  the control trajectory:
-	
-	$$\begin{aligned}
+  for the state trajectory each of which is of a vector of $n_x$ variables, and $N$ variables for  the control trajectory:
+  <p>$$\begin{aligned}
 	u_0, u_1, \dots, u_{N-1}
 	\end{aligned}
-	$$
-	
-	each of which is a vector of size $n_u$.
+	$$</p>
+  each of which is a vector of size $n_u$.
 - The trajectory should satisfy some constraints, for example simple bounds, this is expressed in the inequality for each state and control pair
   
   $$
@@ -67,16 +71,24 @@ $$
   $$
   
 - Most importantly, the trajectory that we plan, should satisfy the discrete dynamics of the system, and should start at some initial point $\bar{x}_0 \in \mathbb{R}^{n_x}$, given by the equality constraints:
+
+<p>
+$$
+\begin{aligned}
+& 0 = x_0 - \bar{x}_0 \\
+ 	&  0 = x_{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1
+\end{aligned}
+$$
+</p>
   
-  $$
-  \begin{aligned}& 0 = x_0 - \bar{x}_0 \\
-  &  0 = x_{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1 \end{aligned}
-  $$
   
-- The cost function is divided into a *stage cost*  $l(x_k, u_k)$ for each interval and a terminal cost $E(x_N)$ for the terminal node. A very common example is a *tracking cost* 
-  $$
-  \begin{aligned}\sum (x_k - \bar{x}_k)^\top Q (x_k - \bar{x}_k) + (u_k - \bar{u}_k)^\top R (u_k - \bar{u}_k) \end{aligned}
-  $$
+- The cost function is divided into a *stage cost*  $l(x_k, u_k)$ for each interval and a terminal cost $E(x_N)$ for the terminal node. A very common example is a *tracking cost*
+
+$$
+\begin{aligned}
+\sum (x_k - \bar{x}_k)^\top Q (x_k - \bar{x}_k) + (u_k - \bar{u}_k)^\top R (u_k - \bar{u}_k)
+\end{aligned}
+$$
   
   when we want to find a control which makes the system follow a given reference of states $\bar{x}_0, \bar{x}_1, \dots,$  and controls  $\bar{u}_0, \bar{u}_1, \dots,$. Here $Q$ and $R$ are (typically diagonal) *weighting matrices*, to emphasise the importance of either control or state tracking.
 
