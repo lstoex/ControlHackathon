@@ -1,7 +1,6 @@
 Welcome to the hackathon ....
 What is the goal of this hackathon? -> Students get a feeling for what kind of tasks/problems they might encounter, see the 'power of control' on simple examples.
 
-
 ---
 You can do whatever you like or find interesting!
 
@@ -21,7 +20,19 @@ Groups of 2-4 students, supervised by PhD students and Professors.
 	- Numpy
 	- Matplotlib
 - We use the python framework [`CasAdi`](https://web.casadi.org/) to formulate OCPs
-# Scenarios
+# Scenarios & Methods
+
+List of Scenarios:
+- [Scenario - 2D-XY Bicycle Control](Scenario%20-%202D-XY%20Bicycle%20Control.md)
+- [Scenario - 2D-XZ Drone Control](Scenario%20-%202D-XZ%20Drone%20Control.md)
+
+List of Methods:
+- Closed Loop
+	- [LQR](Method%20-%20LQR%20Controller.md)
+	- [Method - Open Loop Planning](Method%20-%20Open%20Loop%20Planning.md)
+- Open Loop
+	- [Method - Model Predictive Control](Method%20-%20Model%20Predictive%20Control.md)
+
 For every scenario, we prepared python code that implements:
 - the model equations
 - an open-loop simulation (TODO: Picture of open loop system) with a nice visualization. The simulation requires a starting state and an open-loop control-strategy $u(t)$ as inputs.
@@ -38,16 +49,3 @@ For every scenario, we prepared python code that implements:
   ```python
 	scenario.closedLoopSimulation(x_0, u_t, t_f=10)`
 	```
-
-
-List of Scenarios:
-- [[(Scenario) 2D-XY Bicycle Control]]
-- [[(Scenario) 2D-XZ Drone Control]]
-
-List of Methods:
-- Closed Loop
-	- [LQR](documentation/%28Method%29%20LQR%20Controller.md)
-	- 
-	- [[(Method) Open Loop Planning]]
-- Open Loop
-	- [[(Method) Model Predictive Control]]
