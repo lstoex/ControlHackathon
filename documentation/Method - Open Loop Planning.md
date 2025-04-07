@@ -69,13 +69,13 @@ $$
 Most importantly, the trajectory that we plan, should satisfy the discrete dynamics of the system, and should start at some initial point $\bar{x}_0 \in \mathbb{R}^{n_x}$, given by the equality constraints:
 
 $$
-\begin{aligned}& 0 = x_0 - \bar{x}_0 \\
+\begin{aligned}& 0 = x_0 - \bar{x}_ 0 \\
 &  0 = x_{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1 \end{aligned}
 $$
 
 The cost function is divided into a *stage cost*  $l(x_k, u_k)$ for each interval and a terminal cost $E(x_N)$ for the terminal node. A very common example is a *tracking cost* 
 $$
-\begin{aligned}\sum (x_k - \bar{x}_k)^\top Q (x_k - \bar{x}_k) + (u_k - \bar{u}_k)^\top R (u_k - \bar{u}_k) \end{aligned}
+\begin{aligned}\sum (x_k - \bar{x}_ k)^\top Q (x_k - \bar{x}_ k) + (u_k - \bar{u}_ k)^\top R (u_k - \bar{u}_ k) \end{aligned}
 $$
   
 when we want to find a control which makes the system follow a given reference of states $\bar{x}_0, \bar{x}_1, \dots,$  and controls  $\bar{u}_0, \bar{u}_1, \dots,$. Here $Q$ and $R$ are (typically diagonal) *weighting matrices*, to emphasise the importance of either control or state tracking.
