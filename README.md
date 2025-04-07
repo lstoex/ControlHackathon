@@ -21,12 +21,15 @@ For every scenario, we prepared python code that implements:
 - the model equations
 - an open-loop simulation (TODO: Picture of open loop system) with a nice visualization. The simulation requires a starting state and an open-loop control-strategy $u(t)$ as inputs.
   ```python
-def u_t(t):
-	if t < 3:
-		return 0
-	else:
-		return 1
-
-scenario.openLoopSimulation(x_0, u_t, t_f=10)
-```
-- 
+	def u_t(t):
+		if t < 3:
+			return 0
+		else:
+			return 1
+			
+	scenario.openLoopSimulation(x_0, u_t, t_f=10)
+	```
+- a close-loop simulation:
+  ```python
+	scenario.closedLoopSimulation(x_0, u_t, t_f=10)`
+	```
