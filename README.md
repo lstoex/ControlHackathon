@@ -23,15 +23,15 @@ Groups of 2-4 students, supervised by PhD students and Professors.
 # Scenarios & Methods
 
 List of Scenarios:
-- [Scenario - 2D-XY Bicycle Control](Scenario%20-%202D-XY%20Bicycle%20Control.md)
-- [Scenario - 2D-XZ Drone Control](Scenario%20-%202D-XZ%20Drone%20Control.md)
+- [Scenario - 2D-XY Bicycle Control](documentation/Scenario%20-%202D-XY%20Bicycle%20Control.md)
+- [Scenario - 2D-XZ Drone Control](documentation/Scenario%20-%202D-XZ%20Drone%20Control.md)
 
 List of Methods:
 - Closed Loop
 	- [LQR](Method%20-%20LQR%20Controller.md)
-	- [Method - Open Loop Planning](Method%20-%20Open%20Loop%20Planning.md)
+	- [Method - Open Loop Planning](documentation/Method%20-%20Open%20Loop%20Planning.md)
 - Open Loop
-	- [Method - Model Predictive Control](Method%20-%20Model%20Predictive%20Control.md)
+	- [Method - Model Predictive Control](documentation/Method%20-%20Model%20Predictive%20Control.md)
 
 For every scenario, we prepared python code that implements:
 - the model equations
