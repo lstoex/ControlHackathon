@@ -2,7 +2,8 @@
 We are considering for a real-life system, which we model using an ordinary differential equation 
 $$
 \dot{x} = f(x,u)
-$$with state $x\in \mathbb{R}^{n_x}$, and control $u\in \mathbb{R}^{n_u}$. We want to find a find a control strategy $u(t)$ such that the trajectory $x(t)$ that the system (hopefully) follows in the future, is optimal in the sense of some cost function.
+$$
+with state $x\in \mathbb{R}^{n_x}$, and control $u\in \mathbb{R}^{n_u}$. We want to find a find a control strategy $u(t)$ such that the trajectory $x(t)$ that the system (hopefully) follows in the future, is optimal in the sense of some cost function.
 ## Discrete Dynamics
 
 For simplicity, we assume in the following that we approximate the continuous state trajectory $x(t)$ on grid points $t_0, t_1, \dots, t_k, t_{k+1}, \dots$ as $x(t_k) \approx x_k$. Also, for simplicity, we assume that over each interval the control is constant: $u(t) = u_k, \forall  t \in [t_k, t_{k+1}]$, and that the intervals have the same constant duration, $h = t_{k+1} - t_k$.
