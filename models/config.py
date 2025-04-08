@@ -10,6 +10,15 @@ class DroneXZConfig:
     l: float = 0.5
 
 @dataclass
+class DroneZConfig:
+    nx: int = 2
+    nu: int = 1
+    mass: float = 1.0
+    gravity: float = 9.81
+    drag_coefficient: float = 0.5
+
+
+@dataclass
 class BicycleXYConfig:
     nx: int = 3
     nu: int = 2

@@ -56,7 +56,6 @@ class DroneXZModel(BaseModel):
             ax.set_ylim(-1, 5)
             ax.set_xlabel('px(m)', fontsize=14)
             ax.set_ylabel('pz(m)', fontsize=14)
-            ax.set_title('Drone XZ Simulation')
             left_x = x_trajectory[0, i] - self.model_config.l * ca.cos(x_trajectory[2, i])
             left_z = x_trajectory[1, i] - self.model_config.l * ca.sin(x_trajectory[2, i])
             right_x = x_trajectory[0, i] + self.model_config.l * ca.cos(x_trajectory[2, i])
