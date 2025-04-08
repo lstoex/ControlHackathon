@@ -18,7 +18,7 @@ V
 \end{aligned}
 $$
 
-with position $p_x$, $p_y$, and heading angle $\theta$ relative to the $x$-axis. The vehicle is controlled with a specific steering angle $\delta$ and a fixed velocity $V$ . 
+with position $p_x$, $p_y$, and heading angle $\theta$ relative to the $x$-axis. The vehicle is controlled with a specific steering angle $\delta$ and a fixed velocity $V$. 
 
 $$
 \begin{aligned}
@@ -46,3 +46,16 @@ and depends on the distances $l_\mathrm{r},l_\mathrm{f}$, of the center of mass 
 - (MEDIUM) collision avoidance (Open Loop Planning)
 - (MEDIUM) car parking problem (Open Loop Planning)
 - (HARD) collision avoidance (MPC)
+
+
+## Details
+
+| State                                     | Symbol               | Unit  |
+| ----------------------------------------- | -------------------- | ----- |
+| p                                         | $p \in \mathbb{R}^2$ | m     |
+| orientation relative to the vertical axis | $\phi$               | rad   |
+
+| Parameter                              | Symbol         | Value | Unit          |     |
+| -------------------------------------- | -------------- | ----- | ------------- | --- |
+| distance center of mass to front wheel | $l_\mathrm{f}$ | 0.5   | m             |     |
+| distance center of mass to front wheel | $l_\mathrm{r}$ | 0.5   | $\mathrm{kg}$ |     |

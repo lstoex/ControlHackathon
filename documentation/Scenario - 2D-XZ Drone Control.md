@@ -29,13 +29,6 @@ $$
 
 with 2D position $p \in \mathrm{R}^2$, velocity $v \in \mathrm{R}^2$, orientation angle $\phi$ relative to the vertical axis and rotational velocity $\dot{\phi}$, $\dot{\phi} >0$ is a counterclockwise rotation. The drone is controlled using two positive and bounded rotor forces $0 \leq (u_\mathrm{l},u_\mathrm{r}) \leq u_\mathrm{max}$.
 
-| Parameter      | Symbol | Value | Unit                      |
-| -------------- | ------ | ----- | ------------------------- |
-| Dist. to Rotor | $d$    | 5     | $\mathrm{cm}$             |
-| Mass           | $m$    | 0.1   | $\mathrm{kg}$             |
-| Rot. Inertia   | $I$    | ?     | $\mathrm{kg}\mathrm{m}^2$ |
-| Grav. Acc.     | $g$    | 9.81  | $\mathrm{ms^{-2}}$        |
-
 The following forces act on the drone:
 - Propellors forces $u_\mathrm{l}, u_\mathrm{r}$ given as controls at distance $d = 5\,\mathrm{cm}$ from the center of gravity.
 
@@ -84,3 +77,19 @@ $$
 	- (HARD) Plan a time-optimal trajectory
 - (MEDIUM) Implement a tracking MPC-Controller
 	 - (HARD) Implement a collision-avoidance tracking MPC controller for two drones.
+
+## Details
+
+| State                                     | Symbol               | Unit          |
+| ----------------------------------------- | -------------------- | ------------- |
+| XZ - position of the drone                | $p \in \mathbb{R}^2$ | m             |
+| XZ - velocity of the drone                | $v \in \mathbb{R}^2$ | $\mathrm{kg}$ |
+| orientation relative to the vertical axis | $\phi $              | rad           |
+| angular velocity                          | $\dot{\phi}$         | rad/s         |
+
+| Parameter                   | Symbol | Value | Unit                      |
+| --------------------------- | ------ | ----- | ------------------------- |
+| distance to rotor           | $d$    | 5     | $\mathrm{cm}$             |
+| mass                        | $m$    | 0.1   | $\mathrm{kg}$             |
+| rotational interia          | $I$    | ?     | $\mathrm{kg}\mathrm{m}^2$ |
+| acceleration due to gravity | $g$    | 9.81  | $\mathrm{ms^{-2}}$        |
