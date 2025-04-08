@@ -39,7 +39,10 @@ with 2D position $p \in \mathrm{R}^2$, velocity $v \in \mathrm{R}^2$, orientatio
 The following forces act on the drone:
 - Propellors forces $u_\mathrm{l}, u_\mathrm{r}$ given as controls at distance $d = 5\,\mathrm{cm}$ from the center of gravity.
 
-$$F_p = \left(u_\mathrm{l} + u_\mathrm{r}\right) \begin{bmatrix}  \sin(\phi) \\ \cos(\phi)\end{bmatrix}$$
+$$
+F_p = \left(u_\mathrm{l} + u_\mathrm{r}\right) \begin{bmatrix}  \sin(\phi) \\
+\cos(\phi)\end{bmatrix}
+$$
 
 - Gravity at the center of gravity
 
