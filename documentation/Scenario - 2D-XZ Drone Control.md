@@ -1,18 +1,24 @@
+# Scenario - 2D-XZ Drone Control
 *Future PhD workshop, Hannover, April 2025, Jakob Harzer, Yunfan Gao, Moritz Diehl*
 
 In this scenario we consider a drone in the 2D xz-plane:
-<img src="2DroneImage.png" width="250"/>
-### Dynamics
-$$\begin{align}
+<img src="_misc/2DroneImage.png" width="350"/>
+
+## Dynamics
+
+$$
+\begin{aligned}
 x = \begin{bmatrix}
 p \\ v \\ \phi \\ \dot{\phi}
 \end{bmatrix} = \begin{bmatrix}
 p_x \\ p_z \\ v_x \\ v_z \\ \phi \\ \dot{\phi}
 \end{bmatrix}\in \R^6 && u = \begin{bmatrix}
-\omega_1 \\ \omega_2
+u_\mathrm{l} \\ u_\mathrm{r}
 \end{bmatrix} \in \R^2
-\end{align}$$
-with 2D position $p \in \R^2$ \[$\mathrm{m}$\], velocity $v \in \R^2$ \[$\mathrm{m/s}$\], orientation angle $\phi$ \[$\mathrm{rad}$\] relative to the vertical axis and rotational velocity $\dot{\phi}$ \[$\mathrm{rad/s}$\], $\dot{\phi} >0$ is a counterclockwise rotation. The drone is controlled using two positive and bounded rotor speeds $0 \leq \omega_i \leq \omega_\mathrm{max}$.
+\end{aligned}
+$$
+
+with 2D position $p \in \R^2$ \[$\mathrm{m}$\], velocity $v \in \R^2$ \[$\mathrm{m/s}$\], orientation angle $\phi$ \[$\mathrm{rad}$\] relative to the vertical axis and rotational velocity $\dot{\phi}$ \[$\mathrm{rad/s}$\], $\dot{\phi} >0$ is a counterclockwise rotation. The drone is controlled using two positive and bounded rotor forces $0 \leq (u_\mathrm{l},u_\mathrm{r}) \leq u_\mathrm{max}$.
 
 | Parameter      | Symbol | Value | Unit                      |
 | -------------- | ------ | ----- | ------------------------- |
@@ -21,19 +27,33 @@ with 2D position $p \in \R^2$ \[$\mathrm{m}$\], velocity $v \in \R^2$ \[$\mathrm
 | Rot. Inertia   | $I$    | ?     | $\mathrm{kg}\mathrm{m}^2$ |
 | Grav. Acc.     | $g$    | 9.81  | $\mathrm{ms^{-2}}$        |
 The following forces act on the drone:
-- Propellors forces  at distance $d = \SI{5}{\mathrm{cm}}$ from the center of gravity.$$F_i = c_\mathrm{p} \omega_i\begin{bmatrix}  \sin(\phi) \\ \cos(\phi)\end{bmatrix}, \quad i = 1,2$$
-- Gravity at the center of gravity$$F_g = \begin{bmatrix}0 \\ -m g\end{bmatrix}$$
-- Optional: aerodynamic drag force $$F_D(v, v_\mathrm{wind}) = ?$$
+- Propellors forces $u_\mathrm{l}, u_\mathrm{r}$ given as controls at distance $d = 5\,\mathrm{cm}$ from the center of gravity.
+$$F_p = \left(u_\mathrm{l} + u_\mathrm{r}\right) \begin{bmatrix}  \sin(\phi) \\ \cos(\phi)\end{bmatrix}$$
 
-The forces of the propellors not only move the drone, but also create a moment $$M_p = c_\mathrm{p} \omega_1 d - c_\mathrm{p} \omega_2 d$$which rotates the drone around it's center of mass. The dynamics are then given by:
-$$\begin{align}
+- Gravity at the center of gravity
+$$F_g = \begin{bmatrix}0 \\ -m g\end{bmatrix}$$
+- Optional: aerodynamic drag force 
+$$F_D(v, v_\mathrm{wind}) = ?$$
+
+The forces of the propellors not only move the drone, but also create a moment 
+
+$$
+M_p = \left(u_\mathrm{l} - u_\mathrm{r}\right) d
+$$
+
+which rotates the drone around it's center of mass. The dynamics are then given by:
+
+$$
+\begin{aligned}
 \begin{bmatrix}
 \dot{p} \\ \dot{v} \\ \dot{\phi} \\ \ddot{\phi}
 \end{bmatrix} = \dot{x} = f(x,u) =  \begin{bmatrix}
 v \\ m^{-1}(F_1 + F_2 + F_g) \\ \dot{\phi} \\ I^{-1} M_p
 \end{bmatrix}
-\end{align}$$
-### Ideas for Projects
+\end{aligned}
+$$
+
+## Ideas for Projects
 - (MEDIUM) Use an LQR/PID/H-$\infty$ controller to stabilize the drone.
 	- (MEDIUM) Extend the drone model with a airdrag force, stabilize the drone against a strong wind gust.
 	- (MEDIUM) USE an LQR controller to track a reference
