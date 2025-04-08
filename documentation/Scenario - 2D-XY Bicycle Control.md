@@ -11,10 +11,10 @@ x = \begin{bmatrix}
 p_x \\ 
 p_y \\ 
 \theta
-\end{bmatrix} \in \R^3 && u = \begin{bmatrix}
+\end{bmatrix} \in \mathrm{R}^3 && u = \begin{bmatrix}
 \delta \\ 
 V
-\end{bmatrix} \in \R^2
+\end{bmatrix} \in \mathrm{R}^2
 \end{aligned}
 $$
 
@@ -23,8 +23,8 @@ with position $p_x$, $p_y$, and heading angle $\theta$ relative to the $x$-axis.
 $$
 \begin{aligned}
 \begin{bmatrix}
-\dot{p}_x \\ 
-\dot{p}_y \\ 
+\dot{p}_ x \\ 
+\dot{p}_ y \\ 
 \dot{\theta}
 \end{bmatrix} = \dot{x} = f(x,u) =  \begin{bmatrix}
 V \cos(\theta + \beta) \\ 
