@@ -55,7 +55,7 @@ and depends on the distances $l_\mathrm{r},l_\mathrm{f}$, of the center of mass 
 | p                                         | $p \in \mathbb{R}^2$ | m     |
 | orientation relative to the vertical axis | $\phi$               | rad   |
 
-| Parameter                              | Symbol         | Value | Unit          |     |
-| -------------------------------------- | -------------- | ----- | ------------- | --- |
-| distance center of mass to front wheel | $l_\mathrm{f}$ | 0.5   | m             |     |
-| distance center of mass to front wheel | $l_\mathrm{r}$ | 0.5   | $\mathrm{kg}$ |     |
+| Parameter                              | Symbol         | Value | Unit          |
+| -------------------------------------- | -------------- | ----- | ------------- |
+| distance center of mass to front wheel | $l_\mathrm{f}$ | 0.5   | m             |
+| distance center of mass to front wheel | $l_\mathrm{r}$ | 0.5   | $\mathrm{kg}$ |

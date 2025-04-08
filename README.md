@@ -15,21 +15,12 @@ Timetable
 - Day 2, **13:30 – 14:15**, Presentation of hackathon results by participants
 Groups of 2-4 students, supervised by PhD students and Professors.
 
-### Tools
-- Python with standard libraries
-	- Numpy
-	- Matplotlib
-- We use the python framework [`CasAdi`](https://web.casadi.org/) to formulate OCPs
-### Installation
-
-1. Install Python and required packages. If you want you can create a virtual environment first.
-2. Clone this repository using `git clone` into a folder of choice
-3. 
 ### Scenarios & Methods
 
 List of Scenarios:
 - [Scenario - 2D-XY Bicycle Control](documentation/Scenario%20-%202D-XY%20Bicycle%20Control.md)
 - [Scenario - 2D-XZ Drone Control](documentation/Scenario%20-%202D-XZ%20Drone%20Control.md)
+- [Scenario - 2D-XZ Rocket Control](documentation/Scenario%20-%202D-XZ%20Rocket%20Control.md)
 
 List of Methods:
 - Open Loop
@@ -54,3 +45,19 @@ For every scenario, we prepared python code that implements:
   ```python
 	scenario.closedLoopSimulation(x_0, u_t, t_f=10)`
 	```
+
+
+### Tools
+- Python with standard libraries
+	- Numpy
+	- Matplotlib
+- We use the python framework [`CasAdi`](https://web.casadi.org/) to formulate OCPs
+### Installation
+
+1. Install Python and required packages. `numpy, matplotlib, casadi`. If you want you can create a virtual environment first.
+2. Clone this repository using `git clone` into a folder of choice
+3. Run the example file
+	```bash
+	python3 example.py
+	```
+	to see that everything works as intended.
