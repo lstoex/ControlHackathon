@@ -76,7 +76,7 @@ I^{-1} M_\mathrm{T}
 $$
 
 ## Ideas for Projects
-- (MEDIUM) Use an LQR/PID/H-$\infty$ controller to stabilize the drone.
+- (MEDIUM) Use an LQR/PID controller to stabilize the drone.
 	- (MEDIUM) Extend the drone model with a airdrag force, stabilize the drone against a strong wind gust.
 	- (MEDIUM) USE an LQR controller to track a reference
 - (MEDIUM) Plan an open-loop trajectory for a point-to-point motion by solving an OCP.
