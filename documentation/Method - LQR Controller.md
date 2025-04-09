@@ -1,5 +1,8 @@
 # (Method) LQR Controller
 
+<img src="_misc/closedLoop.svg" width="800"/>
+
+
 The LQR (Linear Quadratic Regulator) is a method for finding a feedback control $u(x) = -K x$ for a linear system
 which is optimal in the sense of minimizing a quadratic cost function.
 
@@ -75,3 +78,10 @@ For this, we can use Newton-Iteration, the `python-control` library also provide
 ```python
 control.lqr(A, B, Q, R)
 ```
+
+## Further Literature:
+
+- **Brian Douglas**, *What is Model Predictive Control?*, YouTube, 2015. Available online: https://www.youtube.com/watch?v=E_RDCFOlJx4.
+
+
+- **Moritz Diehl and Sébastien Gros**, _Numerical Optimal Control_. Available online: [http://www.syscop.de/numericaloptimalcontrol](http://www.syscop.de/numericaloptimalcontrol).
