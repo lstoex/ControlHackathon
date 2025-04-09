@@ -2,7 +2,7 @@ TODO: Intro Text. Welcome to the hackathon ....
 What is the goal of this hackathon? -> Students get a feeling for what kind of tasks/problems they might encounter, see the 'power of control' on simple examples.
 
 ---
-You can do whatever you like or find interesting!
+You can do whatever you like or find interesting, feel free to modify any code you like.
 
 ----
 
@@ -20,19 +20,27 @@ Groups of 2-4 students, supervised by PhD students and Professors.
 For inspiration, we prepared a few models and methods that you can use as a starting point. 
 
 Ideas for Models:
-- [Scenario - 2D-XY Bicycle Control](documentation/Scenario%20-%202D-XY%20Bicycle%20Control.md)
-- [Scenario - 2D-XZ Drone Control](documentation/Scenario%20-%202D-XZ%20Drone%20Control.md)
-- [Scenario - 2D-XZ Rocket Control](documentation/Scenario%20-%202D-XZ%20Rocket%20Control.md)
+- [2D-XY Bicycle](documentation/Scenario%20-%202D-XY%20Bicycle%20Control.md)
+- [2D-XZ Drone](documentation/Scenario%20-%202D-XZ%20Drone%20Control.md)
+- [2D-XZ Rocket](documentation/Scenario%20-%202D-XZ%20Rocket%20Control.md)
 
 Ideas for Methods:
 - Open Loop
-	- [Method - Open Loop Planning](documentation/Method%20-%20Open%20Loop%20Planning.md)
+	- [Open Loop Planning](documentation/Method%20-%20Open%20Loop%20Planning.md)
 - Closed Loop
-	- [LQR](Method%20-%20LQR%20Controller.md)
-	- [Method - Model Predictive Control](documentation/Method%20-%20Model%20Predictive%20Control.md)
+	- [Linear Quadratic Regulator](documentation/Method%20-%20LQR%20Controller.md)
+	- [Model Predictive Control](documentation/Method%20-%20Model%20Predictive%20Control.md)
 	
-For every of those models, we prepared python code that implements:
-- the model equations
+For every of the models, we prepared python code that implements:
+- the right-hand side of the dynamics, i.e., the function $f(x,u)$
+  ```python
+  model.dynamics(x, u)
+  ```
+- a function to compute the linearizations $A = \frac{\partial f}{\partial x} (\bar{x},\bar{u})$ and $B = \frac{\partial f}{\partial u} (\bar{x},\bar{u})$ around a point $\bar{x}, \bar{u}$
+  ```python
+  A,B = model.linearizedDynamics(x_ss, u_ss)
+  ```
+
 - an open-loop simulation (TODO: Picture of open loop system) with a nice visualization. The simulation requires a starting state and an open-loop control-strategy $u(t)$ as inputs.
   ```python
 	def u_t(t):
@@ -45,7 +53,7 @@ For every of those models, we prepared python code that implements:
 	```
 - a close-loop simulation:
   ```python
-	scenario.closedLoopSimulation(x_0, u_t, t_f=10)`
+	model.closedLoopSimulation(x_0, u_t, t_f=10)`
 	```
 
 

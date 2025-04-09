@@ -1,6 +1,6 @@
 # (Method) LQR Controller
 
-<img src="_misc/closedLoop.svg" width="800"/>
+<img src="_misc/closedLoop.svg" width="600"/>
 
 
 The LQR (Linear Quadratic Regulator) is a method for finding a feedback control $u(x) = -K x$ for a linear system
@@ -28,20 +28,19 @@ $$
 Here $Q$ and $R$ are symmetric matrices to balance the cost function between the state and control variables, typically diagonal. 
 The matrix $S$ is optional, but it can be used to couple the state and control variables in the cost function.
 
-In this case, the *algebraic Riccati equation in discrete time* is given by
+From dynamic programming, we find that the optimal feedback matrix $K$ is given by
+
+$$
+K = (R + B^\top  P B)^{-1}(S + B^\top  P A)
+$$
+
+where $P$ is given by the solution of the *algebraic Riccati equation in discrete time*
 
 $$
 P = Q + A^\top  P A - (S^\top  + A^\top  P B)(R + B^\top  P B)^{-1}(S + B^\top  P A).
 $$
 
 This is a nonlinear matrix equation in the symmetric matrix $P$, i.e., with $n_x(n_x+1)/2$ unknowns. It can either be solved by an iterative application of the difference Riccati recursion or by faster converging procedures such as Newton-type methods, where, however, care has to be taken to avoid possible shadow solutions that are not positive definite. 
-
-It's solution yields the feedback matrix:
-
-$$
-K = (R + B^\top  P B)^{-1}(S + B^\top  P A)
-$$
-
 The `python-control` library provides the function
 ```python
 control.dlqr(A, B, Q, R)
