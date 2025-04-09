@@ -80,7 +80,8 @@ control.lqr(A, B, Q, R)
 
 ## Further Literature:
 
-- **Brian Douglas**, *What is Model Predictive Control?*, YouTube, 2015. Available online: https://www.youtube.com/watch?v=E_RDCFOlJx4.
+- **Matlab, Brian Douglas**, *What Is Linear Quadratic Regulator (LQR) Optimal Control? | State Space, Part 4
+*, YouTube, 2019. Available online: https://www.youtube.com/watch?v=E_RDCFOlJx4.
 
 
 - **Moritz Diehl and Sébastien Gros**, _Numerical Optimal Control_. Available online: [http://www.syscop.de/numericaloptimalcontrol](http://www.syscop.de/numericaloptimalcontrol).
