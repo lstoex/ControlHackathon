@@ -1,5 +1,10 @@
 # Open Loop Planning
-We are considering a real-life system, which we model using an ordinary differential equation 
+
+<img src="_misc/openLoop.svg" width="800"/>
+
+
+
+We are considering a system, which we model using an ordinary differential equation 
 
 $$
 \begin{aligned}
@@ -33,11 +38,7 @@ $$
 $$
 
 
-We already implemented such a function in the code, a single step:
-```python
-F = model.discreteDynamics(h)
-x_1 = F(x_0, u_0)
-```
+
 ## Discrete Optimal Control Problem
 <img src="_misc/DOCP.png" width="700"/>
 
@@ -45,9 +46,9 @@ Given the system model and constraints, a quite generic discrete time optimal co
 
 $$
 \begin{aligned}
-\min_{x_0,u_0,x_1,u_1} &\sum_{k=0}^{N-1} l(x_k,u_k) + E(x_N) \\
+\min_{x_0,u_0,x_1,u_1} &\sum_{k=0}^{N-1} l_k(x_k,u_k) + E(x_N) \\
 \text{s.t.}\quad & 0 = x_0 - \bar{x}_ 0 \\&  0 = x_{k+1} - F(x_k, u_k), \quad &k=0,\dots,N-1 \\
-&  0 \leq h(x_k, u_k), \quad &k=0,\dots,N-1 
+&  0 \geq h(x_k, u_k), \quad &k=0,\dots,N-1 
 \end{aligned}
 $$
 
@@ -67,7 +68,7 @@ The trajectory should satisfy some constraints, for example simple bounds, this 
 
 $$
 \begin{aligned}
-h(x_k, u_k)
+h(x_k, u_k) \leq 0
 \end{aligned}
 $$
   
@@ -102,3 +103,5 @@ with variables $w$, objective function $f$, equality constraints $g$ and inequal
 
 ## Extended Literature:
 - **Moritz Diehl and Sébastien Gros**, _Numerical Optimal Control_. Available online: [http://www.syscop.de/numericaloptimalcontrol](http://www.syscop.de/numericaloptimalcontrol).
+
+- **J. B. Rawlings, D. Q. Mayne, and M. M. Diehl**, *Model Predictive Control: Theory, Computation, and Design*, 2nd edition, Nob Hill, 2017.
