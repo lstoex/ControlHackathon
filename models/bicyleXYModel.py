@@ -52,8 +52,8 @@ class BicycleXYModel(BaseModel):
 
 
     def animateSimulation(self, x_trajectory, u_trajectory, num_agents:int=1, additional_lines_or_scatters=None):
-        wheel_long_axis = 0.2
-        wheel_short_axis = 0.1
+        wheel_long_axis = 0.4
+        wheel_short_axis = 0.2
 
         sim_length = u_trajectory.shape[1]
         fig, ax = plt.subplots()
@@ -74,7 +74,7 @@ class BicycleXYModel(BaseModel):
                 rear_x = x_trajectory[i_agent*nx, i] - self.model_config.lr * ca.cos(x_trajectory[i_agent*nx+2, i])
                 rear_y = x_trajectory[i_agent*nx+1, i] - self.model_config.lr * ca.sin(x_trajectory[i_agent*nx+2, i])
                 ax.plot(x_trajectory[i_agent*nx, :i+1], x_trajectory[i_agent*nx+1, :i+1], color="tab:gray", linewidth=2, zorder=0)
-                ax.scatter(x_trajectory[i_agent*nx, i], x_trajectory[i_agent*nx+1, i], color="tab:gray", s=100, zorder=2)
+                ax.scatter(x_trajectory[i_agent*nx, i], x_trajectory[i_agent*nx+1, i], color="tab:gray", s=50, zorder=2)
                 ax.plot([front_x, rear_x], [front_y, rear_y], color="tab:blue", linewidth=3, zorder=1)
                 if i < sim_length:
                     wheel_f = patches.Ellipse((front_x, front_y), wheel_long_axis, wheel_short_axis, angle=math.degrees(x_trajectory[i_agent*nx+2, i] + u_trajectory[0, i]), color="tab:green")
