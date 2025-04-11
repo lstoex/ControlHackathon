@@ -1,8 +1,9 @@
-# Scenario - 2D-XZ Drone Control
+# Scenario - 2D-XZ Rocket Control
 *Future PhD workshop, Hannover, April 2025, Jakob Harzer, Yunfan Gao, Moritz Diehl*
 
-In this scenario we consider a drone in the 2D xz-plane:
-<img src="_misc/2DroneImage.png" width="350"/>
+In this scenario we consider a rocket in the 2D xz-plane:
+
+<img src="_misc/rocketSketch.svg" width="700"/>
 
 ## Dynamics
 
@@ -21,37 +22,42 @@ v_z \\
 \phi \\ 
 \dot{\phi}
 \end{bmatrix}\in \mathrm{R}^6 && u = \begin{bmatrix}
-u_\mathrm{l} \\
-u_\mathrm{r}
+T \\
+\delta
 \end{bmatrix} \in \mathrm{R}^2
 \end{aligned}
 $$
 
-with 2D position $p \in \mathrm{R}^2$, velocity $v \in \mathrm{R}^2$, orientation angle $\phi$ relative to the vertical axis and rotational velocity $\dot{\phi}$, $\dot{\phi} >0$ is a counterclockwise rotation. The drone is controlled using two positive and bounded rotor forces $0 \leq (u_\mathrm{l},u_\mathrm{r}) \leq u_\mathrm{max}$.
+with 2D position $p \in \mathrm{R}^2$, velocity $v \in \mathrm{R}^2$, orientation angle $\phi$ relative to the vertical axis and rotational velocity $\dot{\phi}$, $\dot{\phi} >0$ is a counterclockwise rotation. The rocket is controlled using a thrust-vectoring system where the direction of the thrust can be changed using a gimbal.
 
-The following forces act on the drone:
-- Propellors forces $u_\mathrm{l}, u_\mathrm{r}$ given as controls at distance $d = 5\,\mathrm{cm}$ from the center of gravity.
+The following forces act on the rocket:
+- The thrust force $T$ given by the first control
 
 $$
-F_p = \left(u_\mathrm{l} + u_\mathrm{r}\right) \begin{bmatrix}  \sin(\phi) \\
-\cos(\phi)\end{bmatrix}
+F_\mathrm{T} = T \begin{bmatrix}  \sin(\phi + \delta) \\
+\cos(\phi + \delta)\end{bmatrix}
 $$
 
-- Gravity at the center of gravity
+- Gravity
 
-$$F_g = \begin{bmatrix}0 \\
--m g\end{bmatrix}$$
+$$
+F_g = \begin{bmatrix}0 \\
+-m g\end{bmatrix}
+$$
+
 - Optional: aerodynamic drag force 
 
 $$F_D(v, v_\mathrm{wind}) = ?$$
 
-The forces of the propellors not only move the drone, but also create a moment 
+The force from the thruster no only acceleartes the rocket but also creates a moment
 
 $$
-M_p = \left(u_\mathrm{l} - u_\mathrm{r}\right) d
+M_\mathrm{T} = r \times F_\mathrm{T} = T \cdot d \cdot \sin(\delta)
 $$
 
-which rotates the drone around it's center of mass. The dynamics are then given by:
+which rotates the drone around it's center of mass.
+Here $r$ is the vector of lenght $d$ from the drones center of mass to the thruster.
+The dynamics are then given by:
 
 $$
 \begin{aligned}
@@ -62,15 +68,15 @@ $$
 \ddot{\phi}
 \end{bmatrix} = \dot{x} = f(x,u) =  \begin{bmatrix}
 v \\
-m^{-1}(F_p + F_g) \\
+m^{-1}(F_\mathrm{T} + F_g) \\
 \dot{\phi} \\
-I^{-1} M_p
+I^{-1} M_\mathrm{T}
 \end{bmatrix}
 \end{aligned}
 $$
 
 ## Ideas for Projects
-- (MEDIUM) Use an LQR/PID/H-$\infty$ controller to stabilize the drone.
+- (MEDIUM) Use an LQR/PID controller to stabilize the drone.
 	- (MEDIUM) Extend the drone model with a airdrag force, stabilize the drone against a strong wind gust.
 	- (MEDIUM) USE an LQR controller to track a reference
 - (MEDIUM) Plan an open-loop trajectory for a point-to-point motion by solving an OCP.
@@ -82,14 +88,14 @@ $$
 
 | State                                     | Symbol               | Unit          |
 | ----------------------------------------- | -------------------- | ------------- |
-| XZ - position of the drone                | $p \in \mathbb{R}^2$ | m             |
-| XZ - velocity of the drone                | $v \in \mathbb{R}^2$ | $\mathrm{kg}$ |
+| XZ - position of the rocket                | $p \in \mathbb{R}^2$ | m             |
+| XZ - velocity of the rocket                | $v \in \mathbb{R}^2$ | $\mathrm{kg}$ |
 | orientation relative to the vertical axis | $\phi $              | rad           |
 | angular velocity                          | $\dot{\phi}$         | rad/s         |
 
 | Parameter                   | Symbol | Value | Unit                      |
 | --------------------------- | ------ | ----- | ------------------------- |
-| distance to rotor           | $d$    | 5     | $\mathrm{cm}$             |
-| mass                        | $m$    | 0.1   | $\mathrm{kg}$             |
+| distance to center of mass to thruster           | $d$    | ?     | $\mathrm{cm}$             |
+| mass                        | $m$    | ?  | $\mathrm{kg}$             |
 | rotational interia          | $I$    | ?     | $\mathrm{kg}\mathrm{m}^2$ |
 | acceleration due to gravity | $g$    | 9.81  | $\mathrm{ms^{-2}}$        |
