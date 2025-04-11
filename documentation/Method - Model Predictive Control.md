@@ -22,7 +22,7 @@ more details can be found in the [Open Loop Planning](documentation/Method%20-%2
 After its solution, the first control $u_0$ is applied to the system. In the next time step, the optimization problem is solved again with the new state $\hat{x}$ of the system as initial state $x_0$.
 
 
-## Extended Literature:
+## Further Literature:
 - **Moritz Diehl and Sébastien Gros**, _Numerical Optimal Control_. Available online: [http://www.syscop.de/numericaloptimalcontrol](http://www.syscop.de/numericaloptimalcontrol).
 
 - **J. B. Rawlings, D. Q. Mayne, and M. M. Diehl**, *Model Predictive Control: Theory, Computation, and Design*, 2nd edition, Nob Hill, 2017.

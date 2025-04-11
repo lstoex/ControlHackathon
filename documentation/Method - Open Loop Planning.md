@@ -101,7 +101,7 @@ with variables $w$, objective function $f$, equality constraints $g$ and inequal
 - The Python library `scipy`,  provides the function [`scipy.optimize.minimize`](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.minimize.html).
 - Matlabs `optim` toolbox provides the function [`fmincon`](https://www.mathworks.com/help/optim/ug/fmincon.html).
 
-## Extended Literature:
+## Further Literature:
 - **Moritz Diehl and Sébastien Gros**, _Numerical Optimal Control_. Available online: [http://www.syscop.de/numericaloptimalcontrol](http://www.syscop.de/numericaloptimalcontrol).
 
 - **J. B. Rawlings, D. Q. Mayne, and M. M. Diehl**, *Model Predictive Control: Theory, Computation, and Design*, 2nd edition, Nob Hill, 2017.
