@@ -46,6 +46,15 @@ class DroneXZModel(BaseModel):
         opts = {'tf': self._sampling_time}
         self.I = ca.integrator('I', 'rk', dae, opts)
 
+        self.A_func = ca.Function('A_func', [x, u], [ca.jacobian(x_dot, x)])
+        self.B_func = ca.Function('B_func', [x, u], [ca.jacobian(x_dot, u)])
+
+
+    def linearizeContinuousDynamics(self, x, u):
+        A = self.A_func(x, u).full()
+        B = self.B_func(x, u).full()
+        return A, B
+
 
     def animateSimulation(self, x_trajectory, u_trajectory, additional_lines_or_scatters=None):
         sim_length = u_trajectory.shape[1]
