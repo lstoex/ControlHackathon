@@ -28,7 +28,7 @@ class DroneZModel(BaseModel):
         u = ca.MX.sym('u', self.model_config.nu)
         x_dot = ca.vertcat(
             x[1],  # \dot{pz}
-            -self._gravity + (u[0] - self.model_config.drag_coefficient * x[1]) / self.model_config.mass  # \dot{vz}
+            -self.model_config.gravity + (u[0] - self.model_config.drag_coefficient * x[1]) / self.model_config.mass  # \dot{vz}
         )
         dae = {'x': x, 'p': u, 'ode': x_dot}
         opts = {'tf': self._sampling_time}

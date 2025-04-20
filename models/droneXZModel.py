@@ -39,7 +39,7 @@ class DroneXZModel(BaseModel):
             x[4],  # \dot{pz}
             x[5],  # \dot{pitch}
             -(u[0] + u[1]) * ca.sin(x[2]) / (2 * self.model_config.mass),                   # \dot{vx}
-            - self._gravity + (u[0] + u[1]) * ca.cos(x[2]) / (2 * self.model_config.mass),  # \dot{vz}
+            - self.model_config.gravity + (u[0] + u[1]) * ca.cos(x[2]) / (2 * self.model_config.mass),  # \dot{vz}
             (u[1] - u[0]) / (4 * self.model_config.mass * self.model_config.l)              # \dot{vpitch}
         )
         dae = {'x': x, 'p': u, 'ode': x_dot}

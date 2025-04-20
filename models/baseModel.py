@@ -4,7 +4,6 @@ import numpy as np
 class BaseModel:
     model_name = "BaseModel"
     model_config = None
-    _gravity = 9.8
     _sampling_time = np.nan
 
     def __init__(self, sampling_time: float):

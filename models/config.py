@@ -8,6 +8,7 @@ class DroneXZConfig:
     nu: int = 2
     mass: float = 1.0
     l: float = 0.5
+    gravity: float = 9.81
 
 @dataclass
 class DroneZConfig:
