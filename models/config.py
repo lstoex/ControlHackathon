@@ -18,6 +18,12 @@ class DroneZConfig:
     gravity: float = 9.81
     drag_coefficient: float = 0.5
 
+@dataclass
+class OmniBotXYConfig:
+    nx: int = 4
+    nu: int = 2
+    safety_radius: float = 0.8
+
 
 @dataclass
 class BicycleXYConfig:
