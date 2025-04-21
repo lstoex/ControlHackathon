@@ -110,7 +110,7 @@ class BicycleXYMultiAgentCtrl:
             raise ValueError("Goal value must be set before solving the OCP.")
 
         solution = self._solver(
-            x0=ca.vertcat(self.x_sol.flatten(), self.u_sol.flatten()),
+            x0=ca.veccat(self.x_sol, self.u_sol),
             p=ca.vertcat(x_0, self._goal_val),
             lbg=ca.vertcat(*self._lbg),
             ubg=ca.vertcat(*self._ubg)
