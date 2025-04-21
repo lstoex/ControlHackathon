@@ -33,7 +33,7 @@ Slip angle beta = atan(lr * tan(delta) / (lr + lf))
 class BicycleXYModel(BaseModel):
     def __init__(self, sampling_time):
         super().__init__(sampling_time)
-        self.model_name = "DroneXZModel"
+        self.model_name = "BicycleXYModel"
         self.model_config = BicycleXYConfig()
 
         x = ca.MX.sym('x', self.model_config.nx)
