@@ -1,10 +1,10 @@
 import casadi as ca
+from dataclasses import dataclass
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
 
 from models.baseModel import BaseModel
-from models.config import DroneXZConfig
 
 
 """
@@ -25,6 +25,15 @@ a = (fl, fr)
 2m*\dot{vz} = -2m*g + (fl + fr)*cos(pitch)
 4*m*l*l*\dot{vpitch} = (fr - fl) * l
 """
+
+@dataclass
+class DroneXZConfig:
+    nx: int = 6
+    nu: int = 2
+    mass: float = 1.0
+    l: float = 0.5
+    gravity: float = 9.81
+
 
 class DroneXZModel(BaseModel):
     def __init__(self, sampling_time):

@@ -1,4 +1,5 @@
 import casadi as ca
+from dataclasses import dataclass
 import math
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
@@ -6,13 +7,19 @@ import matplotlib
 import numpy as np
 
 from models.baseModel import BaseModel
-from models.config import OmniBotXYConfig
 
 
 """
 x = (px, py, vx, vy)
 a = (ax, ay)
 """
+
+@dataclass
+class OmniBotXYConfig:
+    nx: int = 4
+    nu: int = 2
+    safety_radius: float = 0.8
+
 
 class OmniBotXYModel(BaseModel):
     def __init__(self, sampling_time):

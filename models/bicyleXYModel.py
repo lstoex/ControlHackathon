@@ -1,11 +1,11 @@
 import casadi as ca
+from dataclasses import dataclass
 import math
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
 
 from models.baseModel import BaseModel
-from models.config import BicycleXYConfig
 
 """
 https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/BicycleModel.html
@@ -29,6 +29,14 @@ Slip angle beta = atan(lr * tan(delta) / (lr + lf))
 \dot{yaw} = throttle * sin(beta) / lr
 """
 
+
+@dataclass
+class BicycleXYConfig:
+    nx: int = 3
+    nu: int = 2
+    lf: float = 0.5
+    lr: float = 0.5
+    safety_radius: float = 0.8
 
 class BicycleXYModel(BaseModel):
     def __init__(self, sampling_time):

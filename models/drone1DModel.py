@@ -1,10 +1,10 @@
 import casadi as ca
+from dataclasses import dataclass
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import numpy as np
 
 from models.baseModel import BaseModel
-from models.config import DroneZConfig
 
 """
 | DroneZModel |
@@ -16,6 +16,14 @@ a = (thrust)
 \dot{vz} = -g + (thrust - c * vz) / m
 c: drag coefficient
 """
+
+@dataclass
+class DroneZConfig:
+    nx: int = 2
+    nu: int = 1
+    mass: float = 1.0
+    gravity: float = 9.81
+    drag_coefficient: float = 0.5
 
 
 class DroneZModel(BaseModel):
