@@ -2,6 +2,7 @@ import casadi as ca
 import math
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+import matplotlib
 import numpy as np
 
 from models.baseModel import BaseModel
@@ -34,6 +35,20 @@ class OmniBotXYModel(BaseModel):
 
 
     def animateSimulation(self, x_trajectory, u_trajectory, num_agents:int=1, additional_lines_or_scatters=None):
+
+        fontsize = 16
+        params = {
+            'text.latex.preamble': r"\usepackage{gensymb} \usepackage{amsmath} \usepackage{amsfonts} \usepackage{cmbright}",
+            'axes.labelsize': fontsize,
+            'axes.titlesize': fontsize,
+            'legend.fontsize': fontsize,
+            'xtick.labelsize': fontsize,
+            'ytick.labelsize': fontsize,
+            "mathtext.fontset": "stixsans",
+            "axes.unicode_minus": False,
+        }
+        matplotlib.rcParams.update(params)
+
         sim_length = u_trajectory.shape[1]
         fig, ax = plt.subplots()
 

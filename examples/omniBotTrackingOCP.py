@@ -20,7 +20,7 @@ class RefTrackingCtrlConfig:
     num_agents = 2
 
 
-class BicycleXYMultiAgentCtrl:
+class OmniBotXYMultiAgentCtrl:
     def __init__(self, sampling_time: float, num_agents:int, model: omniBotXYModel.OmniBotXYModel):
         self._sampling_time = sampling_time
         self._num_agents = num_agents
@@ -139,7 +139,7 @@ def open_loop():
     x2_init_val = np.array([2.5, 0.7, 0.0, 0.0])
 
     model = omniBotXYModel.OmniBotXYModel(sampling_time)
-    controller = BicycleXYMultiAgentCtrl(sampling_time, num_agents=num_agents, model=model)
+    controller = OmniBotXYMultiAgentCtrl(sampling_time, num_agents=num_agents, model=model)
     controller.setup_OCP()
 
     p1_ref_val = (p1_target_val[:, np.newaxis] - x1_init_val[:2, np.newaxis]) @ np.linspace(0.0, 1.0, controller.n_hrzn+1, endpoint=True)[np.newaxis, :] + x1_init_val[:2, np.newaxis]
