@@ -19,8 +19,8 @@ a = (fl, fr)
 
 @dataclass
 class DroneXZLQRCtrlConfig:
-    Q: np.ndarray = np.diag([1.0, 1.0, 1.0, 0.1, 0.1, 0.1])
-    R: np.ndarray = np.diag([0.1, 0.1])
+    Q: np.ndarray = np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1])
+    R: np.ndarray = np.diag([0.01, 0.01])
 
 
 class DroneXZLQRCtrl:
@@ -37,7 +37,7 @@ class DroneXZLQRCtrl:
             K, S, E = control.lqr(A, B, Q, R)
             return K
 
-        self.x_equilibrium = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
+        self.x_equilibrium = np.array([2.0, 2.0, 0.0, 0.0, 0.0, 0.0])
         self.u_equilibrium = np.array([self._model.model_config.mass*self._model.model_config.gravity, self._model.model_config.mass*self._model.model_config.gravity])
         self.fdbk_gain = compute_feedback_gain(self.x_equilibrium, self.u_equilibrium)
 
@@ -50,8 +50,8 @@ class DroneXZLQRCtrl:
 
 def main():
     sampling_time = 0.05
-    sim_length = 30
-    x_init = np.array([0.02, 0.02, -np.pi/20., 0.1, -0.05, 0.0])
+    sim_length = 70
+    x_init = np.array([0.0, 0.0, 0.0, 0.0, -np.pi/10., 0.0])
     goal = 2.0
     model = droneXZModel.DroneXZModel(sampling_time)
     controller = DroneXZLQRCtrl(sampling_time, model)

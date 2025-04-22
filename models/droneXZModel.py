@@ -15,7 +15,7 @@ m(kg)  (px, pz)     m(kg)
 fl------------------fr
 The forces excerted by the left and right propellers are perpendicular to the drone.
 
-x = (px, pz, pitch, vx, vz, vpitch)
+x = (px, pz, vx, vz, pitch, vpitch)
 a = (fl, fr)
 
 \dot{px} = vx
@@ -44,12 +44,12 @@ class DroneXZModel(BaseModel):
         x = ca.MX.sym('x', self.model_config.nx)
         u = ca.MX.sym('u', self.model_config.nu)
         x_dot = ca.vertcat(
-            x[3],  # \dot{px}
-            x[4],  # \dot{pz}
+            x[2],  # \dot{px}
+            x[3],  # \dot{pz}
+            -(u[0] + u[1]) * ca.sin(x[4]) / (2 * self.model_config.mass),                               # \dot{vx}
+            - self.model_config.gravity + (u[0] + u[1]) * ca.cos(x[4]) / (2 * self.model_config.mass),  # \dot{vz}
             x[5],  # \dot{pitch}
-            -(u[0] + u[1]) * ca.sin(x[2]) / (2 * self.model_config.mass),                   # \dot{vx}
-            - self.model_config.gravity + (u[0] + u[1]) * ca.cos(x[2]) / (2 * self.model_config.mass),  # \dot{vz}
-            (u[1] - u[0]) / (4 * self.model_config.mass * self.model_config.l)              # \dot{vpitch}
+            (u[1] - u[0]) / (4 * self.model_config.mass * self.model_config.l)                          # \dot{vpitch}
         )
         dae = {'x': x, 'p': u, 'ode': x_dot}
         opts = {'tf': self._sampling_time}
@@ -74,16 +74,16 @@ class DroneXZModel(BaseModel):
             ax.set_ylim(-1, 5)
             ax.set_xlabel('px(m)', fontsize=14)
             ax.set_ylabel('pz(m)', fontsize=14)
-            left_x = x_trajectory[0, i] - self.model_config.l * ca.cos(x_trajectory[2, i])
-            left_z = x_trajectory[1, i] - self.model_config.l * ca.sin(x_trajectory[2, i])
-            right_x = x_trajectory[0, i] + self.model_config.l * ca.cos(x_trajectory[2, i])
-            right_z = x_trajectory[1, i] + self.model_config.l * ca.sin(x_trajectory[2, i])
+            left_x = x_trajectory[0, i] - self.model_config.l * ca.cos(x_trajectory[4, i])
+            left_z = x_trajectory[1, i] - self.model_config.l * ca.sin(x_trajectory[4, i])
+            right_x = x_trajectory[0, i] + self.model_config.l * ca.cos(x_trajectory[4, i])
+            right_z = x_trajectory[1, i] + self.model_config.l * ca.sin(x_trajectory[4, i])
             ax.plot(x_trajectory[0, :i+1], x_trajectory[1, :i+1], color="tab:gray", linewidth=2, zorder=0)
             ax.plot([left_x, right_x], [left_z, right_z], color="tab:blue", linewidth=5, zorder=1)
             ax.scatter(x_trajectory[0, i], x_trajectory[1, i], color="tab:gray", s=100, zorder=2)
             if i < sim_length:
-                patch_fl = patches.Arrow(left_x, left_z, -0.1*u_trajectory[0, i]*ca.sin(x_trajectory[2, i]), 0.1*u_trajectory[0, i]*ca.cos(x_trajectory[2, i]), color="tab:green")
-                patch_fr = patches.Arrow(right_x, right_z, -0.1*u_trajectory[1, i]*ca.sin(x_trajectory[2, i]), 0.1*u_trajectory[1, i]*ca.cos(x_trajectory[2, i]), color="tab:green")
+                patch_fl = patches.Arrow(left_x, left_z, -0.1*u_trajectory[0, i]*ca.sin(x_trajectory[4, i]), 0.1*u_trajectory[0, i]*ca.cos(x_trajectory[4, i]), color="tab:green")
+                patch_fr = patches.Arrow(right_x, right_z, -0.1*u_trajectory[1, i]*ca.sin(x_trajectory[4, i]), 0.1*u_trajectory[1, i]*ca.cos(x_trajectory[4, i]), color="tab:green")
                 ax.add_patch(patch_fl)
                 ax.add_patch(patch_fr)
 

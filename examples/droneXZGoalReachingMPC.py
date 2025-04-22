@@ -15,11 +15,8 @@ import models.droneXZModel as droneXZModel
 class GoalReachingCtrlConfig:
     max_fl: float = 20.0
     max_fr: float = 20.0
-    goal_weight: float = 1.0
-    pitch_weight: float = 1.0
-    velocities_weight: float = 0.1
-    acceleration_weight: float = 0.01
-    terminal_weight_factor: float = 10.0
+    Q: np.ndarray = np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1])
+    R: np.ndarray = np.diag([0.01, 0.01])
     n_hrzn = 20
 
 
@@ -63,15 +60,12 @@ class DroneXZGoalReachingCtrl:
 
     def _setup_obj_func(self):
         self._J = 0.0
+        x_goal = ca.veccat(self._goal_param, ca.DM.zeros(4, 1))
         for i in range(self._ctrl_config.n_hrzn):
-            self._J += self._ctrl_config.goal_weight * ca.sumsqr(self._x_opt[0:2, i] - self._goal_param)  # Goal position
-            self._J += self._ctrl_config.pitch_weight * ca.sumsqr(self._x_opt[2, i])  # Pitch
-            self._J += self._ctrl_config.velocities_weight * ca.sumsqr(self._x_opt[3:5, i])
-            self._J += self._ctrl_config.acceleration_weight * ca.sumsqr(self._u_opt[:, i])
+            self._J += (self._x_opt[:, i] - x_goal).T @ self._ctrl_config.Q @ (self._x_opt[:, i] - x_goal)
+            self._J += self._u_opt[:, i].T @ self._ctrl_config.R @ self._u_opt[:, i]
         # Terminal cost
-        self._J += self._ctrl_config.terminal_weight_factor * self._ctrl_config.goal_weight * ca.sumsqr(self._x_opt[0:2, -1] - self._goal_param)
-        self._J += self._ctrl_config.terminal_weight_factor * self._ctrl_config.pitch_weight * ca.sumsqr(self._x_opt[2, -1])
-        self._J += self._ctrl_config.terminal_weight_factor * self._ctrl_config.velocities_weight * ca.sumsqr(self._x_opt[3:5, -1])
+        self._J += (self._x_opt[:, -1] - x_goal).T @ self._ctrl_config.Q @ (self._x_opt[:, -1] - x_goal)
         return
 
     def setup_OCP(self):
