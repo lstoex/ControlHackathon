@@ -10,16 +10,16 @@ In this scenario we consider a rocket in the 2D xz-plane:
 $$
 \begin{aligned}
 x = \begin{bmatrix}
-p \\ 
-v \\ 
-\phi \\ 
+p \\
+v \\
+\phi \\
 \dot{\phi}
 \end{bmatrix} = \begin{bmatrix}
-p_x \\ 
-p_z \\ 
-v_x \\ 
-v_z \\ 
-\phi \\ 
+p_x \\
+p_z \\
+v_x \\
+v_z \\
+\phi \\
 \dot{\phi}
 \end{bmatrix}\in \mathrm{R}^6 && u = \begin{bmatrix}
 T \\
@@ -31,7 +31,7 @@ $$
 with 2D position $p \in \mathrm{R}^2$, velocity $v \in \mathrm{R}^2$, orientation angle $\phi$ relative to the vertical axis and rotational velocity $\dot{\phi}$, $\dot{\phi} >0$ is a counterclockwise rotation. The rocket is controlled using a thrust-vectoring system where the direction of the thrust can be changed using a gimbal.
 
 The following forces act on the rocket:
-- The thrust force results from the first control $T$: 
+- The thrust force results from the first control $T$:
 
 $$
 F_\mathrm{T} = T \begin{bmatrix}  \sin(\phi + \delta) \\
@@ -45,7 +45,7 @@ F_g = \begin{bmatrix}0 \\
 -m g\end{bmatrix}
 $$
 
-- Optional: aerodynamic drag force 
+- Optional: aerodynamic drag force
 
 $$F_D(v, v_\mathrm{wind}) = ?$$
 
@@ -62,7 +62,7 @@ The dynamics are then given by:
 $$
 \begin{aligned}
 \begin{bmatrix}
-\dot{p} \\ 
+\dot{p} \\
 \dot{v} \\
 \dot{\phi} \\
 \ddot{\phi}
@@ -88,14 +88,14 @@ $$
 
 | State                                     | Symbol               | Unit          |
 | ----------------------------------------- | -------------------- | ------------- |
-| XZ - position of the rocket                | $p \in \mathbb{R}^2$ | m             |
-| XZ - velocity of the rocket                | $v \in \mathbb{R}^2$ | $\mathrm{kg}$ |
-| orientation relative to the vertical axis | $\phi $              | rad           |
-| angular velocity                          | $\dot{\phi}$         | rad/s         |
+| XZ - position of the rocket                | $p \in \mathbb{R}^2$ | $\mathrm{m}$             |
+| XZ - velocity of the rocket                | $v \in \mathbb{R}^2$ | $\mathrm{m}\cdot \mathrm{s}^{-1}$ |
+| orientation relative to the vertical axis | $\phi  \in \mathbb{R}$              | $\mathrm{rad}$           |
+| angular velocity                          | $\dot{\phi} \in \mathbb{R}$         | $\mathrm{rad}\cdot \mathrm{s}^{-1}$         |
 
 | Parameter                   | Symbol | Value | Unit                      |
 | --------------------------- | ------ | ----- | ------------------------- |
-| distance to center of mass to thruster           | $d$    | ?     | $\mathrm{m}$             |
-| mass                        | $m$    | ?  | $\mathrm{kg}$             |
-| rotational interia          | $I$    | ?     | $\mathrm{kg}\mathrm{m}^2$ |
-| acceleration due to gravity | $g$    | 9.81  | $\mathrm{ms^{-2}}$        |
+| distance to center of mass to thruster           | $d$    | 0.80     | $\mathrm{m}$             |
+| mass                        | $m$    | 0.70   | $\mathrm{kg}$             |
+| rotational inertia          | $I$    | 0.30  | $\mathrm{kg}\cdot \mathrm{m}^2$ |
+| acceleration due to gravity | $g$    | 9.81  | $\mathrm{m}\cdot \mathrm{s}^{-2}$        |
