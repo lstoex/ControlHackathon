@@ -111,6 +111,6 @@ class RocketXZModel(BaseModel):
             ax.legend()
             fig.subplots_adjust(bottom=0.15)
             plt.show(block=False)
-            plt.pause(0.2)
+            plt.pause(1.0 if i == sim_length else 0.2)
             ax.clear()
         return

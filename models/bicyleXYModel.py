@@ -3,30 +3,14 @@ from dataclasses import dataclass
 import math
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
-import numpy as np
 
 from models.baseModel import BaseModel
 
-"""
-https://thomasfermi.github.io/Algorithms-for-Automated-Driving/Control/BicycleModel.html
-BicycleXYModel
----||-------
-    .    |
-    .    lf
-    .    |
-    x    (px, py)
-    .    |
-    .    lr
-    .    |
----||-------
 
+"""
 Consider the kinematic model only:
 x = (px, py, yaw)
-a = (steering, throttle)
-Slip angle beta = atan(lr * tan(delta) / (lr + lf))
-\dot{x} = throttle * cos(yaw + beta)
-\dot{y} = throttle * sin(yaw + beta)
-\dot{yaw} = throttle * sin(beta) / lr
+a = (delta, V)
 """
 
 
@@ -64,7 +48,7 @@ class BicycleXYModel(BaseModel):
         wheel_short_axis = 0.2
 
         sim_length = u_trajectory.shape[1]
-        fig, ax = plt.subplots()
+        _, ax = plt.subplots()
 
         nx = self.model_config.nx
         nu = self.model_config.nu
@@ -85,7 +69,7 @@ class BicycleXYModel(BaseModel):
                 ax.scatter(x_trajectory[i_agent*nx, i], x_trajectory[i_agent*nx+1, i], color="tab:gray", s=50, zorder=2)
                 ax.plot([front_x, rear_x], [front_y, rear_y], color="tab:blue", linewidth=3, zorder=1)
                 if i < sim_length:
-                    wheel_f = patches.Ellipse((front_x, front_y), wheel_long_axis, wheel_short_axis, angle=math.degrees(x_trajectory[i_agent*nx+2, i] + u_trajectory[0, i]), color="tab:green")
+                    wheel_f = patches.Ellipse((front_x, front_y), wheel_long_axis, wheel_short_axis, angle=math.degrees(x_trajectory[i_agent*nx+2, i] + u_trajectory[0, i]), color="tab:green", label="Wheels" if i_agent == 0 else None)
                     wheel_r = patches.Ellipse((rear_x, rear_y), wheel_long_axis, wheel_short_axis, angle=math.degrees(x_trajectory[i_agent*nx+2, i]), color="tab:green")
                     ax.add_patch(wheel_f)
                     ax.add_patch(wheel_r)
@@ -98,7 +82,8 @@ class BicycleXYModel(BaseModel):
                     elif value["type"] == "line":
                         ax.plot(value["data"][0], value["data"][1], color=value["color"], linewidth=2, label=key)
             ax.set_title(f"Bicycle Simulation: Step {i+1}")
+            ax.legend()
             plt.show(block=False)
-            plt.pause(0.2)
+            plt.pause(1.0 if i == sim_length else 0.3)
             ax.clear()
         return

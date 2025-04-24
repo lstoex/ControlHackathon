@@ -8,27 +8,27 @@
 $$
 \begin{aligned}
 x = \begin{bmatrix}
-p_x \\ 
-p_y \\ 
+p_x \\
+p_y \\
 \theta
 \end{bmatrix} \in \mathrm{R}^3 && u = \begin{bmatrix}
-\delta \\ 
+\delta \\
 V
 \end{bmatrix} \in \mathrm{R}^2
 \end{aligned}
 $$
 
-with position $p_x$, $p_y$, and heading angle $\theta$ relative to the $x$-axis. The vehicle is controlled with a specific steering angle $\delta$ and a fixed velocity $V$. 
+with position $p_x$, $p_y$, and heading angle $\theta$ relative to the $x$-axis. The vehicle is controlled with a specific steering angle $\delta$ and a fixed velocity $V$.
 
 $$
 \begin{aligned}
 \begin{bmatrix}
-\dot{p}_ x \\ 
-\dot{p}_ y \\ 
+\dot{p}_ x \\
+\dot{p}_ y \\
 \dot{\theta}
 \end{bmatrix} = \dot{x} = f(x,u) =  \begin{bmatrix}
-V \cos(\theta + \beta) \\ 
-V \sin(\theta + \beta) \\ 
+V \cos(\theta + \beta) \\
+V \sin(\theta + \beta) \\
 \frac{V}{l_\mathrm{r}}\sin(\beta)
 \end{bmatrix}
 \end{aligned}
@@ -52,10 +52,10 @@ and depends on the distances $l_\mathrm{r},l_\mathrm{f}$, of the center of mass 
 
 | State                                     | Symbol               | Unit  |
 | ----------------------------------------- | -------------------- | ----- |
-| p                                         | $p \in \mathbb{R}^2$ | m     |
-| orientation relative to the vertical axis | $\phi$               | rad   |
+| p                                         | $p \in \mathbb{R}^2$ | $\mathrm{m}$      |
+| orientation relative to the vertical axis | $\phi \in \mathbb{R}$               | $\mathrm{rad}$    |
 
 | Parameter                              | Symbol         | Value | Unit          |
 | -------------------------------------- | -------------- | ----- | ------------- |
-| distance center of mass to front wheel | $l_\mathrm{f}$ | 0.5   | m             |
-| distance center of mass to front wheel | $l_\mathrm{r}$ | 0.5   | $\mathrm{kg}$ |
+| distance center of mass to front wheel | $l_\mathrm{f}$ | 0.5   | $\mathrm{m}$              |
+| distance center of mass to front wheel | $l_\mathrm{r}$ | 0.5   | $\mathrm{m}$ |

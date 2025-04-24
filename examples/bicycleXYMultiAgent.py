@@ -14,12 +14,12 @@ import models.bicyleXYModel as bicycleXYModel
 
 @dataclass
 class GoalReachingCtrlConfig:
-    max_steering: float = math.radians(15.0)
-    max_throttle: float = 3.0
-    goal_weight: float = 1.0
-    acceleration_weight: float = 0.1
-    terminal_weight_factor: float = 10.0
-    n_hrzn = 20
+    max_delta: float = math.radians(15.0)
+    max_V: float = 3.0
+    Q: np.ndarray = np.diag([1.0, 1.0, 1.0])
+    Q_e: np.ndarray = np.diag([10.0, 10.0, 10.0])
+    R: np.ndarray = np.diag([0.1, 0.1])
+    n_hrzn = 50
     num_agents = 2
 
 
@@ -48,11 +48,11 @@ class BicycleXYMultiAgentCtrl:
         nu = self._model.model_config.nu
         for i in range(self._ctrl_config.n_hrzn):
             self._g.append(self._u_opt[0::nu, i])
-            self._lbg.append(-self._ctrl_config.max_steering * np.ones(self._num_agents))
-            self._ubg.append(self._ctrl_config.max_steering * np.ones(self._num_agents))
+            self._lbg.append(-self._ctrl_config.max_delta * np.ones(self._num_agents))
+            self._ubg.append(self._ctrl_config.max_delta * np.ones(self._num_agents))
             self._g.append(self._u_opt[1::nu, i])
             self._lbg.append(np.zeros(self._num_agents,))
-            self._ubg.append(self._ctrl_config.max_throttle * np.ones(self._num_agents))
+            self._ubg.append(self._ctrl_config.max_V * np.ones(self._num_agents))
         # System dynamics
         self._g.append(self._x_opt[:self._num_agents*nx, 0] - self._x_0_param)
         self._lbg.append(np.zeros(self._num_agents * nx,))
@@ -77,10 +77,12 @@ class BicycleXYMultiAgentCtrl:
         self._J = 0.0
         for i_agent in range(self._num_agents):
             for i in range(self._ctrl_config.n_hrzn):
-                self._J += self._ctrl_config.goal_weight * ca.sumsqr(self._x_opt[i_agent*nx:(i_agent+1)*nx, i] - self._goal_param[i_agent*nx:(i_agent+1)*nx, :])  # Goal position
-                self._J += self._ctrl_config.acceleration_weight * ca.sumsqr(self._u_opt[i_agent*nu:(i_agent+1)*nu, i])
+                x_diff = self._x_opt[i_agent*nx:(i_agent+1)*nx, i] - self._goal_param[i_agent*nx:(i_agent+1)*nx, :]
+                self._J += x_diff.T @ self._ctrl_config.Q @ x_diff # cost compensating for the distance to the goal
+                self._J += self._u_opt[i_agent*nu:(i_agent+1)*nu, i].T @ self._ctrl_config.R @ self._u_opt[i_agent*nu:(i_agent+1)*nu, i]  # Control cost
             # Terminal cost
-            self._J += self._ctrl_config.terminal_weight_factor * self._ctrl_config.goal_weight * ca.sumsqr(self._x_opt[:, -1] - self._goal_param)
+            x_diff = self._x_opt[i_agent*nx:(i_agent+1)*nx, -1] - self._goal_param[i_agent*nx:(i_agent+1)*nx, :]
+            self._J += x_diff.T @ self._ctrl_config.Q_e @ x_diff
         return
 
     def setup_OCP(self):
@@ -119,18 +121,6 @@ class BicycleXYMultiAgentCtrl:
         u_sol = solution['x'].full().flatten()[(self._ctrl_config.n_hrzn+1) * nx * self._num_agents:].reshape((nu * self._num_agents, self._ctrl_config.n_hrzn, ), order='F')
         self.x_sol = x_sol
         self.u_sol = u_sol
-
-        # Debug Plotting
-        # fig = plt.figure(1)
-        # ax = fig.add_subplot(2,1,1)
-        # ax.plot(x_sol[0, :], x_sol[1, :], linewidth=3)
-        # ax.set_aspect('equal')
-        # ax = fig.add_subplot(2,1,2)
-        # ax.plot(x_sol[0, :], linewidth=3, label='px')
-        # ax.plot(x_sol[1, :], linewidth=3, label='pz')
-        # ax.plot(x_sol[2, :], linewidth=3, label='pitch')
-        # ax.legend()
-        # plt.show()
 
         return u_sol[:, 0]
 
