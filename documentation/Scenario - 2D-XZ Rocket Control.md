@@ -3,7 +3,7 @@
 
 In this scenario we consider a rocket in the 2D xz-plane:
 
-<img src="_misc/rocketSketch.svg" width="700"/>
+<img src="_misc/rocketSketch.svg"/>
 
 ## Dynamics
 
@@ -31,11 +31,11 @@ $$
 with 2D position $p \in \mathrm{R}^2$, velocity $v \in \mathrm{R}^2$, orientation angle $\phi$ relative to the vertical axis and rotational velocity $\dot{\phi}$, $\dot{\phi} >0$ is a counterclockwise rotation. The rocket is controlled using a thrust-vectoring system where the direction of the thrust can be changed using a gimbal.
 
 The following forces act on the rocket:
-- The thrust force $T$ given by the first control
+- The thrust force results from the first control $T$: 
 
 $$
 F_\mathrm{T} = T \begin{bmatrix}  \sin(\phi + \delta) \\
-\cos(\phi + \delta)\end{bmatrix}
+-\cos(\phi + \delta)\end{bmatrix}
 $$
 
 - Gravity
@@ -52,11 +52,11 @@ $$F_D(v, v_\mathrm{wind}) = ?$$
 The force from the thruster no only acceleartes the rocket but also creates a moment
 
 $$
-M_\mathrm{T} = r \times F_\mathrm{T} = T \cdot d \cdot \sin(\delta)
+M_\mathrm{T} = r \times F_\mathrm{T} =  - T \cdot d \cdot \sin(\delta)
 $$
 
 which rotates the drone around it's center of mass.
-Here $r$ is the vector of lenght $d$ from the drones center of mass to the thruster.
+Here $r$ is the vector of lenght $d$ from the rockets center of mass to the thruster.
 The dynamics are then given by:
 
 $$
@@ -95,7 +95,7 @@ $$
 
 | Parameter                   | Symbol | Value | Unit                      |
 | --------------------------- | ------ | ----- | ------------------------- |
-| distance to center of mass to thruster           | $d$    | ?     | $\mathrm{cm}$             |
+| distance to center of mass to thruster           | $d$    | ?     | $\mathrm{m}$             |
 | mass                        | $m$    | ?  | $\mathrm{kg}$             |
 | rotational interia          | $I$    | ?     | $\mathrm{kg}\mathrm{m}^2$ |
 | acceleration due to gravity | $g$    | 9.81  | $\mathrm{ms^{-2}}$        |
