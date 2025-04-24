@@ -81,7 +81,8 @@ class OmniBotXYModel(BaseModel):
                         ax.scatter(value["data"][0], value["data"][1], color=value["color"], s=value["s"], label=key, marker=value["marker"])
                     elif value["type"] == "line":
                         ax.plot(value["data"][0], value["data"][1], color=value["color"], linewidth=2, label=key)
-            ax.set_title(f"Bicycle Simulation: Step {i+1}")
+            ax.set_title(f"OmniBot Simulation: Step {i+1}")
+            fig.subplots_adjust(bottom=0.15)
             plt.show(block=False)
             plt.pause(0.2)
             ax.clear()
