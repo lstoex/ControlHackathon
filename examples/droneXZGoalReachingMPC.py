@@ -13,9 +13,10 @@ import models.droneXZModel as droneXZModel
 
 @dataclass
 class GoalReachingCtrlConfig:
-    max_fl: float = 20.0
-    max_fr: float = 20.0
+    max_fl: float = 15.0
+    max_fr: float = 15.0
     Q: np.ndarray = np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1])
+    Q_e: np.ndarray = np.diag([10.0, 10.0, 1.0, 1.0, 10.0, 1.0])
     R: np.ndarray = np.diag([0.01, 0.01])
     n_hrzn = 20
 
@@ -61,11 +62,12 @@ class DroneXZGoalReachingCtrl:
     def _setup_obj_func(self):
         self._J = 0.0
         x_goal = ca.veccat(self._goal_param, ca.DM.zeros(4, 1))
+        u_equilibrium = 0.5 * self._model.model_config.mass * self._model.model_config.gravity * ca.DM.ones(2, 1)
         for i in range(self._ctrl_config.n_hrzn):
             self._J += (self._x_opt[:, i] - x_goal).T @ self._ctrl_config.Q @ (self._x_opt[:, i] - x_goal)
-            self._J += self._u_opt[:, i].T @ self._ctrl_config.R @ self._u_opt[:, i]
+            self._J += (self._u_opt[:, i] - u_equilibrium).T @ self._ctrl_config.R @ (self._u_opt[:, i] - u_equilibrium)
         # Terminal cost
-        self._J += (self._x_opt[:, -1] - x_goal).T @ self._ctrl_config.Q @ (self._x_opt[:, -1] - x_goal)
+        self._J += (self._x_opt[:, -1] - x_goal).T @ self._ctrl_config.Q_e @ (self._x_opt[:, -1] - x_goal)
         return
 
     def setup_OCP(self):
@@ -101,18 +103,6 @@ class DroneXZGoalReachingCtrl:
         self.x_sol = x_sol
         self.u_sol = u_sol
 
-        # Debug Plotting
-        # fig = plt.figure(1)
-        # ax = fig.add_subplot(2,1,1)
-        # ax.plot(x_sol[0, :], x_sol[1, :], linewidth=3)
-        # ax.set_aspect('equal')
-        # ax = fig.add_subplot(2,1,2)
-        # ax.plot(x_sol[0, :], linewidth=3, label='px')
-        # ax.plot(x_sol[1, :], linewidth=3, label='pz')
-        # ax.plot(x_sol[2, :], linewidth=3, label='pitch')
-        # ax.legend()
-        # plt.show()
-
         return u_sol[:, 0]
 
     @property
@@ -126,9 +116,9 @@ class DroneXZGoalReachingCtrl:
 
 def main():
     sampling_time = 0.05
-    sim_length = 50
+    sim_length = 100
     x_init = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
-    goal = np.array([3.0, 3.0])
+    goal = np.array([1.0, 1.0])
     model = droneXZModel.DroneXZModel(sampling_time)
     controller = DroneXZGoalReachingCtrl(sampling_time, model)
     controller.setup_OCP()

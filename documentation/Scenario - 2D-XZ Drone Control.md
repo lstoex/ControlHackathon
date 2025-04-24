@@ -9,16 +9,16 @@ In this scenario we consider a drone in the 2D xz-plane:
 $$
 \begin{aligned}
 x = \begin{bmatrix}
-p \\ 
-v \\ 
-\phi \\ 
+p \\
+v \\
+\phi \\
 \dot{\phi}
 \end{bmatrix} = \begin{bmatrix}
-p_x \\ 
-p_z \\ 
-v_x \\ 
-v_z \\ 
-\phi \\ 
+p_x \\
+p_z \\
+v_x \\
+v_z \\
+\phi \\
 \dot{\phi}
 \end{bmatrix}\in \mathrm{R}^6 && u = \begin{bmatrix}
 u_\mathrm{l} \\
@@ -56,7 +56,7 @@ which rotates the drone around it's center of mass. The dynamics are then given 
 $$
 \begin{aligned}
 \begin{bmatrix}
-\dot{p} \\ 
+\dot{p} \\
 \dot{v} \\
 \dot{\phi} \\
 \ddot{\phi}
@@ -82,14 +82,14 @@ $$
 
 | State                                     | Symbol               | Unit          |
 | ----------------------------------------- | -------------------- | ------------- |
-| XZ - position of the drone                | $p \in \mathbb{R}^2$ | m             |
-| XZ - velocity of the drone                | $v \in \mathbb{R}^2$ | $\mathrm{kg}$ |
-| orientation relative to the vertical axis | $\phi $              | rad           |
-| angular velocity                          | $\dot{\phi}$         | rad/s         |
+| XZ - position of the drone                | $p \in \mathbb{R}^2$ | $\mathrm{m}$      |
+| XZ - velocity of the drone                | $v \in \mathbb{R}^2$ | $\mathrm{m}\cdot \mathrm{s}^{-1}$     |
+| orientation relative to the vertical axis | $\phi $              | $\mathrm{rad}$           |
+| angular velocity                          | $\dot{\phi}$         | $\mathrm{rad}\cdot \mathrm{s}^{-1}$        |
 
 | Parameter                   | Symbol | Value | Unit                      |
 | --------------------------- | ------ | ----- | ------------------------- |
-| distance to rotor           | $d$    | 5     | $\mathrm{cm}$             |
-| mass                        | $m$    | 0.1   | $\mathrm{kg}$             |
-| rotational interia          | $I$    | ?     | $\mathrm{kg}\mathrm{m}^2$ |
-| acceleration due to gravity | $g$    | 9.81  | $\mathrm{ms^{-2}}$        |
+| distance to rotor           | $d$    | 0.20  | $\mathrm{m}$             |
+| mass                        | $m$    | 0.50  | $\mathrm{kg}$             |
+| rotational interia          | $I$    | 0.04  | $\mathrm{kg}\cdot\mathrm{m}^2$ |
+| acceleration due to gravity | $g$    | 9.81  | $\mathrm{m}\cdot\mathrm{s}^{-2}$        |
