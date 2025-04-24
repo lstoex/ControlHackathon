@@ -17,7 +17,7 @@ import models.rocketXZModel as rocketXZModel
 class RocketXZLQRCtrlConfig:
     Q: np.ndarray = np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1])
     R: np.ndarray = np.diag([0.1, 0.1])
-    x_equilibrium: np.ndarray = np.array([0.1, 2.0, 0.0, 0.0, 0.0, 0.0])
+    x_equilibrium: np.ndarray = np.array([0.3, 2.0, 0.0, 0.0, 0.0, 0.0])
 
 
 class RocketXZLQRCtrl:
@@ -27,15 +27,22 @@ class RocketXZLQRCtrl:
         self._ctrl_config = RocketXZLQRCtrlConfig()
         self._goal_val = None
 
-        def compute_feedback_gain(x_equilibrium: np.ndarray, u_equilibrium: np.ndarray):
+        def compute_continuousT_feedback_gain(x_equilibrium: np.ndarray, u_equilibrium: np.ndarray):
             A, B = self._model.linearizeContinuousDynamics(x_equilibrium, u_equilibrium)
             Q = self._ctrl_config.Q
             R = self._ctrl_config.R
             K, S, E = control.lqr(A, B, Q, R)
             return K
 
+        def compute_discreteT_feedback_gain(x_equilibrium: np.ndarray, u_equilibrium: np.ndarray):
+            A, B = self._model.linearizeDiscreteDynamics(x_equilibrium, u_equilibrium)
+            Q = self._ctrl_config.Q
+            R = self._ctrl_config.R
+            K, S, E = control.dlqr(A, B, Q, R)
+            return K
+
         self.u_equilibrium = np.array([-self._model.model_config.mass*self._model.model_config.gravity, 0.0])
-        self.fdbk_gain = compute_feedback_gain(self._ctrl_config.x_equilibrium, self.u_equilibrium)
+        self.fdbk_gain = compute_discreteT_feedback_gain(self._ctrl_config.x_equilibrium, self.u_equilibrium)
 
 
     def compute_LQR_control(self, x: np.ndarray,):

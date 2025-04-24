@@ -45,10 +45,19 @@ class RocketXZModel(BaseModel):
         self.A_func = ca.Function('A_func', [x, u], [ca.jacobian(x_dot, x)])
         self.B_func = ca.Function('B_func', [x, u], [ca.jacobian(x_dot, u)])
 
+        self.A_disc_func = ca.Function('A_disc_func', [x, u], [ca.jacobian(self.I(x0=x, p=u)['xf'], x)])
+        self.B_disc_func = ca.Function('B_disc_func', [x, u], [ca.jacobian(self.I(x0=x, p=u)['xf'], u)])
+
 
     def linearizeContinuousDynamics(self, x, u):
         A = self.A_func(x, u).full()
         B = self.B_func(x, u).full()
+        return A, B
+
+
+    def linearizeDiscreteDynamics(self, x, u):
+        A = self.A_disc_func(x, u).full()
+        B = self.B_disc_func(x, u).full()
         return A, B
 
 
