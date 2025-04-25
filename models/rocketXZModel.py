@@ -117,7 +117,7 @@ class RocketXZModel(BaseModel):
                     elif value["type"] == "line":
                         ax.plot(value["data"][0], value["data"][1], color=value["color"], linewidth=2, label=key)
             ax.set_title(f"Rocket XZ Simulation: Step {i+1}")
-            ax.legend(loc="bottom right")
+            ax.legend(loc="lower right")
             fig.subplots_adjust(bottom=0.15)
             plt.show(block=False)
             plt.pause(1.0 if i == sim_length else 0.2)

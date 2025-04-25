@@ -1,8 +1,6 @@
 import casadi as ca
 import control
-from dataclasses import dataclass
-import matplotlib.pyplot as plt
-import math
+from dataclasses import dataclass, field
 import numpy as np
 import os
 import sys
@@ -15,9 +13,9 @@ import models.rocketXZModel as rocketXZModel
 
 @dataclass
 class RocketXZLQRCtrlConfig:
-    Q: np.ndarray = np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1])
-    R: np.ndarray = np.diag([0.1, 0.1])
-    x_equilibrium: np.ndarray = np.array([0.3, 2.0, 0.0, 0.0, 0.0, 0.0])
+    Q: np.ndarray = field(default_factory=lambda: np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1]))
+    R: np.ndarray = field(default_factory=lambda: np.diag([0.1, 0.1]))
+    x_equilibrium: np.ndarray = field(default_factory=lambda: np.array([0.3, 2.0, 0.0, 0.0, 0.0, 0.0]))
 
 
 class RocketXZLQRCtrl:

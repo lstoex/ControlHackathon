@@ -1,7 +1,5 @@
 import casadi as ca
-from dataclasses import dataclass
-import matplotlib.pyplot as plt
-import math
+from dataclasses import dataclass, field
 import numpy as np
 import os
 import sys
@@ -14,8 +12,8 @@ import models.omniBotXYModel as omniBotXYModel
 
 @dataclass
 class RefTrackingCtrlConfig:
-    Q: np.ndarray = np.diag([1.0, 1.0, 0.01, 0.01])
-    R: np.ndarray = np.diag([0.01, 0.01])
+    Q: np.ndarray = field(default_factory=lambda: np.diag([1.0, 1.0, 0.01, 0.01]))
+    R: np.ndarray = field(default_factory=lambda: np.diag([0.01, 0.01]))
     n_hrzn = 50
     num_agents = 2
 

@@ -1,5 +1,5 @@
 import casadi as ca
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import matplotlib.pyplot as plt
 import math
 import numpy as np
@@ -16,9 +16,9 @@ import models.bicyleXYModel as bicycleXYModel
 class GoalReachingCtrlConfig:
     max_delta: float = math.radians(15.0)
     max_V: float = 3.0
-    Q: np.ndarray = np.diag([1.0, 1.0, 1.0])
-    Q_e: np.ndarray = np.diag([10.0, 10.0, 10.0])
-    R: np.ndarray = np.diag([0.1, 0.1])
+    Q: np.ndarray = field(default_factory=lambda: np.diag([1.0, 1.0, 1.0]))
+    Q_e: np.ndarray = field(default_factory=lambda: np.diag([10.0, 10.0, 10.0]))
+    R: np.ndarray = field(default_factory=lambda: np.diag([0.1, 0.1]))
     n_hrzn = 50
     num_agents = 2
 

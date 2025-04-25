@@ -1,6 +1,5 @@
 import casadi as ca
-from dataclasses import dataclass
-import matplotlib.pyplot as plt
+from dataclasses import dataclass, field
 import numpy as np
 import os
 import sys
@@ -15,9 +14,10 @@ import models.droneXZModel as droneXZModel
 class GoalReachingCtrlConfig:
     max_fl: float = 15.0
     max_fr: float = 15.0
-    Q: np.ndarray = np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1])
-    Q_e: np.ndarray = np.diag([10.0, 10.0, 1.0, 1.0, 10.0, 1.0])
-    R: np.ndarray = np.diag([0.01, 0.01])
+
+    Q: np.ndarray = field(default_factory=lambda: np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1]))
+    Q_e: np.ndarray = field(default_factory=lambda: np.diag([10.0, 10.0, 1.0, 1.0, 10.0, 1.0]))
+    R: np.ndarray = field(default_factory=lambda: np.diag([0.01, 0.01]))
     n_hrzn = 20
 
 

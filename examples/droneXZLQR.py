@@ -1,6 +1,6 @@
 import casadi as ca
 import control
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import numpy as np
 import os
 import sys
@@ -17,9 +17,9 @@ a = (fl, fr)
 
 @dataclass
 class DroneXZLQRCtrlConfig:
-    Q: np.ndarray = np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1])
-    R: np.ndarray = np.diag([0.1, 0.1])
-    x_equilibrium: np.ndarray = np.array([1.0, 1.0, 0.0, 0.0, 0.0, 0.0])
+    Q: np.ndarray = field(default_factory=lambda: np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1]))
+    R: np.ndarray = field(default_factory=lambda: np.diag([0.1, 0.1]))
+    x_equilibrium: np.ndarray = field(default_factory=lambda: np.array([1.0, 1.0, 0.0, 0.0, 0.0, 0.0]))
 
 
 class DroneXZLQRCtrl:

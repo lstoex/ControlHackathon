@@ -1,7 +1,5 @@
 import casadi as ca
 from dataclasses import dataclass
-import matplotlib.pyplot as plt
-import math
 import numpy as np
 import os
 import sys
