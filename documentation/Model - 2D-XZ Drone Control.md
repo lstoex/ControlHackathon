@@ -1,7 +1,7 @@
-# Scenario - 2D-XZ Drone Control
+# (Model) 2D-XZ Drone Control
 *Future PhD workshop, Hannover, April 2025, Jakob Harzer, Yunfan Gao, Moritz Diehl*
 
-In this scenario we consider a drone in the 2D xz-plane:
+In this model we consider a drone in the 2D xz-plane:
 <img src="_misc/2DroneImage.png" width="350"/>
 
 ## Dynamics

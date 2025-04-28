@@ -1,4 +1,4 @@
-# (Scenario) 2D-XY Bicycle Control
+# (Model) 2D-XY Bicycle Control
 *Future PhD workshop, Hannover, April 2025, Jakob Harzer, Yunfan Gao, Moritz Diehl*
 
 <img src="_misc/BicycleXYfigure.png" width="500"/>

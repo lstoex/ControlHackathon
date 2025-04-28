@@ -9,10 +9,11 @@ You can do whatever you like or find interesting, feel free to modify any code y
 
 ### Organisation
 Timetable
-- Day 1, **17:45 - 18:15**, Introduction to Hackathon, find groups
-- Day 2, **8:30**, decide what project you want to work on as a group
+- Day 1, **17:00 - 18:30**, Introduction to Hackathon, find groups
+- Day 2, **8:30**, Project Committments (Group Members and Project Working Title)
 - Day 2, **8:30 - 12:30**, Hackathon
-- Day 2, **13:30 – 14:15**, Presentation of hackathon results by participants
+- Day 2, **12:30 – 14:15**, Presentation of hackathon results by participants
+
 Groups of 2-4 students, supervised by PhD students and Professors.
 
 ### Ideas for Models & Methods

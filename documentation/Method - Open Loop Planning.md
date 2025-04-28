@@ -1,4 +1,4 @@
-# Open Loop Planning
+# (Method) Open Loop Planning
 
 <img src="_misc/openLoop.svg" width="800"/>
 

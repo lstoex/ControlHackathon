@@ -45,7 +45,7 @@ class BicycleXYModel(BaseModel):
 
     def animateSimulation(self, x_trajectory, u_trajectory, num_agents:int=1, additional_lines_or_scatters=None):
         wheel_long_axis = 0.4
-        wheel_short_axis = 0.2
+        wheel_short_axis = 0.1
 
         sim_length = u_trajectory.shape[1]
         _, ax = plt.subplots()
