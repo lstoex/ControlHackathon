@@ -32,18 +32,31 @@ Ideas for Methods:
 	
 For every of the models and the methods, we prepared examples, that you can use as a starting point.
 
+### Tools & Installation
 
-### Tools
-- Python with standard libraries
-	- Numpy
-	- Matplotlib
-- We use the python framework [`CasAdi`](https://web.casadi.org/) to formulate OCPs
-### Installation
+For this you need Hackathon, you will need python and an IDE installed on your computer.
+We use the python framework [`CasAdi`](https://web.casadi.org/) to formulate OCPs.
+If you already have Python installed on your system or want to use another IDE, feel free to skip to bullet 4.
 
-1. Install Python and required packages. `numpy, matplotlib, casadi`. If you want you can create a virtual environment first.
-2. Clone this repository using `git clone` into a folder of choice
+- Install Python for your operating system
+- Install VS Code
+- Install the Python Extension for VS Code
+- Install the required python packages:
+	- Start a terminal
+	- Type and press enter:
+		```bash
+		pip install numpy scipy matplotlib casadi control
+		```
+
+### Getting Started
+
+First, please follow the installation instructions above.
+
+1. If you have git installed, clone this repository using `git clone` into a folder of choice. Alternatively, you can just download the folder directly from Github.
+2. Navigate to the cloned folder in your terminal
 3. Run the example file
 	```bash
-	python examples/TODO.py
+	python examples/droneXZLQR.py
 	```
-	to see that everything works as intended.
+	If you see a figure popping up, that means that everything works as intended. If you have trouble settings things up, please reach out to us via email: jakob.harzer(at)imtek.uni-freiburg.de, Yunfan.Gao(at)de.bosch.com
+

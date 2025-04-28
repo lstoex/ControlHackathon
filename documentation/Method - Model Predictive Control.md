@@ -17,7 +17,7 @@ $$
 \end{aligned}
 $$
 
-more details can be found in the [Open Loop Planning](documentation/Method%20-%20Open%20Loop%20Planning.md) page.
+more details can be found in the [Open Loop Planning](../documentation/Method%20-%20Open%20Loop%20Planning.md) page.
 
 After its solution, the first control $u_0$ is applied to the system. In the next time step, the optimization problem is solved again with the new state $\hat{x}$ of the system as initial state $x_0$.
 
