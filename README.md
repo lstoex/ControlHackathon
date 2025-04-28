@@ -1,11 +1,9 @@
-TODO: Intro Text. Welcome to the hackathon ....
-What is the goal of this hackathon? -> Students get a feeling for what kind of tasks/problems they might encounter, see the 'power of control' on simple examples.
+Repository for the Hackathon at the `Future PhD in Control' in Hannover, April 2025.
 
 ---
-You can do whatever you like or find interesting, feel free to modify any code you like.
+In groups from 2-4. the students work on a self-chosen optimal control problem.
 
 ----
-
 
 ### Organisation
 Timetable
@@ -32,30 +30,7 @@ Ideas for Methods:
 	- [Linear Quadratic Regulator](documentation/Method%20-%20LQR%20Controller.md)
 	- [Model Predictive Control](documentation/Method%20-%20Model%20Predictive%20Control.md)
 	
-For every of the models, we prepared python code that implements:
-- the right-hand side of the dynamics, i.e., the function $f(x,u)$
-  ```python
-  model.dynamics(x, u)
-  ```
-- a function to compute the linearizations $A = \frac{\partial f}{\partial x} (\bar{x},\bar{u})$ and $B = \frac{\partial f}{\partial u} (\bar{x},\bar{u})$ around a point $\bar{x}, \bar{u}$
-  ```python
-  A,B = model.linearizedDynamics(x_ss, u_ss)
-  ```
-
-- an open-loop simulation (TODO: Picture of open loop system) with a nice visualization. The simulation requires a starting state and an open-loop control-strategy $u(t)$ as inputs.
-  ```python
-	def u_t(t):
-		if t < 3:
-			return 0
-		else:
-			return 1
-			
-	scenario.openLoopSimulation(x_0, u_t, t_f=10)
-	```
-- a close-loop simulation:
-  ```python
-	model.closedLoopSimulation(x_0, u_t, t_f=10)`
-	```
+For every of the models and the methods, we prepared examples, that you can use as a starting point.
 
 
 ### Tools
