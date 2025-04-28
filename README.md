@@ -1,7 +1,7 @@
 Repository for the Hackathon at the `Future PhD in Control' in Hannover, April 2025.
 
 ---
-In groups from 2-4. the students work on a self-chosen optimal control problem.
+In groups from 2-4, the students work on a self-chosen optimal control problem.
 
 ----
 
@@ -19,9 +19,9 @@ Groups of 2-4 students, supervised by PhD students and Professors.
 For inspiration, we prepared a few models and methods that you can use as a starting point. 
 
 Ideas for Models:
-- [2D-XY Bicycle](documentation/Scenario%20-%202D-XY%20Bicycle%20Control.md)
-- [2D-XZ Drone](documentation/Scenario%20-%202D-XZ%20Drone%20Control.md)
-- [2D-XZ Rocket](documentation/Scenario%20-%202D-XZ%20Rocket%20Control.md)
+- [2D-XY Bicycle](documentation/Model%20-%202D-XY%20Bicycle%20Control.md)
+- [2D-XZ Drone](documentation/Model%20-%202D-XZ%20Drone%20Control.md)
+- [2D-XZ Rocket](documentation/Model%20-%202D-XZ%20Rocket%20Control.md)
 
 Ideas for Methods:
 - Open Loop
