@@ -133,20 +133,21 @@ class DroneXZFormationModel(DroneXZModel):
         x = ca.MX.sym("x", self.model_config.nx * self.model_config.num_drones)
         u = ca.MX.sym("u", self.model_config.nu * self.model_config.num_drones)
         idx_to_stacked = lambda i: i * self.model_config.nx
+        inp_idx_to_stacked = lambda i: i * self.model_config.nu
 
         sys = [
             [
                 x[2 + idx_to_stacked(i)],  # \dot{px}
                 x[3 + idx_to_stacked(i)],  # \dot{pz}
-                -(u[0 + idx_to_stacked(i)] + u[1 + idx_to_stacked(i)])
+                -(u[0 + inp_idx_to_stacked(i)] + u[1 + inp_idx_to_stacked(i)])
                 * ca.sin(x[4 + idx_to_stacked(i)])
                 / self.model_config.mass,  # \dot{vx}
                 -self.model_config.gravity
-                + (u[0 + idx_to_stacked(i)] + u[1 + idx_to_stacked(i)])
+                + (u[0 + inp_idx_to_stacked(i)] + u[1 + inp_idx_to_stacked(i)])
                 * ca.cos(x[4 + idx_to_stacked(i)])
                 / self.model_config.mass,  # \dot{vz}
                 x[5 + idx_to_stacked(i)],  # \dot{pitch}
-                (u[1 + idx_to_stacked(i)] - u[0 + idx_to_stacked(i)])
+                (u[1 + inp_idx_to_stacked(i)] - u[0 + inp_idx_to_stacked(i)])
                 / self.model_config.inertia,
             ]
             for i in range(self.model_config.num_drones)
