@@ -18,7 +18,9 @@ class GoalReachingCtrlConfig:
     Q: np.ndarray = field(default_factory=lambda: np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1]))
     Q_e: np.ndarray = field(default_factory=lambda: np.diag([10.0, 10.0, 1.0, 1.0, 10.0, 1.0]))
     R: np.ndarray = field(default_factory=lambda: np.diag([0.01, 0.01]))
-    n_hrzn = 20
+    n_hrzn = 6
+    nx: int = 4
+    nu: int = 2
 
 
 class DroneXZGoalReachingCtrl:
@@ -41,6 +43,22 @@ class DroneXZGoalReachingCtrl:
         self._g = []
         self._lbg = []
         self._ubg = []
+        self._radius_obs_1=0.35
+        self._radius_obs_2=0.5
+        self._p_obs_1=np.array([1.5,0])
+        self._p_obs_2=np.array([0,1])
+
+        for i in range(self._ctrl_config.n_hrzn+1):
+            # obstacle 1 avoidance constraints
+            self._g.append(ca.sumsqr(self._x_opt[0:2, i] - self._p_obs_1))
+            self._lbg.append((self._model.model_config.d + self._radius_obs_1)**2)
+            self._ubg.append(ca.inf)
+
+            # obstacle 2 avoidance constraints
+            self._g.append(ca.sumsqr(self._x_opt[0:2, i] - self._p_obs_2))
+            self._lbg.append((self._model.model_config.d + self._radius_obs_2)**2)
+            self._ubg.append(ca.inf)
+    
         # Input constraints
         for i in range(self._ctrl_config.n_hrzn):
             self._g.append(self._u_opt[0, i])
@@ -116,9 +134,11 @@ class DroneXZGoalReachingCtrl:
 
 def main():
     sampling_time = 0.05
-    sim_length = 100
+    sim_length = 50
     x_init = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
     goal = np.array([1.0, 1.0])
+    
+
     model = droneXZModel.DroneXZModel(sampling_time)
     controller = DroneXZGoalReachingCtrl(sampling_time, model)
     controller.setup_OCP()

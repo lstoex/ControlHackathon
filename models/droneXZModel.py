@@ -3,6 +3,7 @@ from dataclasses import dataclass
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 import matplotlib
+import numpy as np
 
 from models.baseModel import BaseModel
 
@@ -37,6 +38,11 @@ class DroneXZModel(BaseModel):
         super().__init__(sampling_time)
         self.model_name = "DroneXZModel"
         self.model_config = DroneXZConfig()
+
+        self._radius_obs_1=0.35
+        self._radius_obs_2=0.5
+        self._p_obs_1=np.array([1.5,0])
+        self._p_obs_2=np.array([0,1])
 
         x = ca.MX.sym('x', self.model_config.nx)
         u = ca.MX.sym('u', self.model_config.nu)
@@ -103,6 +109,13 @@ class DroneXZModel(BaseModel):
             ax.plot(x_trajectory[0, :i+1], x_trajectory[1, :i+1], color="tab:gray", linewidth=2, zorder=0)
             ax.plot([left_x, right_x], [left_z, right_z], color="tab:blue", linewidth=5, zorder=1)
             ax.scatter(x_trajectory[0, i], x_trajectory[1, i], color="tab:gray", s=100, zorder=2)
+            
+            # visualize the obstacles
+            ax.add_patch(patches.Circle((self._p_obs_1[0], self._p_obs_1[1]), self._radius_obs_1, linewidth=0.0, color='tab:orange', alpha=0.5))
+            ax.add_patch(patches.Circle((self._p_obs_2[0], self._p_obs_2[1]), self._radius_obs_2, linewidth=0.0, color='tab:orange', alpha=0.5))
+            ax.scatter(self._p_obs_1[0], self._p_obs_1[1], color='tab:orange', s=50, label='Obstacle 1')
+            ax.scatter(self._p_obs_2[0], self._p_obs_2[1], color='tab:orange', s=50, label='Obstacle 2')
+            
             if i < sim_length:
                 patch_fl = patches.Arrow(left_x, left_z, -0.1*u_trajectory[0, i]*ca.sin(x_trajectory[4, i]), 0.1*u_trajectory[0, i]*ca.cos(x_trajectory[4, i]), color="tab:green", width=0.2)
                 patch_fr = patches.Arrow(right_x, right_z, -0.1*u_trajectory[1, i]*ca.sin(x_trajectory[4, i]), 0.1*u_trajectory[1, i]*ca.cos(x_trajectory[4, i]), color="tab:green", width=0.2)
@@ -120,7 +133,7 @@ class DroneXZModel(BaseModel):
             ax.legend()
             fig.subplots_adjust(bottom=0.15)
             plt.show(block=False)
-            plt.pause(1.0 if i == sim_length else 0.2)
+            plt.pause(20.0 if i == sim_length else 0.2)
             ax.clear()
         return
     
