@@ -59,7 +59,7 @@ class BicycleXYMultiAgentCtrl:
         self._ubg.append(np.zeros(self._num_agents * nx,))
         for i_agent in range(self._num_agents):
             for i in range(self._ctrl_config.n_hrzn):
-                self._g.append(self._x_opt[i_agent*nx:(i_agent+1)*nx, i+1] - self._model.I(x0=self._x_opt[i_agent*nx:(i_agent+1)*nx, i], p=self._u_opt[i_agent*nu:(i_agent+1)*nu, i])['xf'])
+                self._g.append(self._x_opt[i_agent*nx:(i_agent+1)*nx, i+1] - self._model.f_disc(self._x_opt[i_agent*nx:(i_agent+1)*nx, i], self._u_opt[i_agent*nu:(i_agent+1)*nu, i]))
         self._lbg.append(np.zeros(nx*self._ctrl_config.n_hrzn*self._num_agents,))
         self._ubg.append(np.zeros(nx*self._ctrl_config.n_hrzn*self._num_agents,))
         # Collision Avoidance Constraints

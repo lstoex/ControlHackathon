@@ -42,6 +42,10 @@ class BicycleXYModel(BaseModel):
         opts = {'tf': self._sampling_time}
         self.I = ca.integrator('I', 'rk', dae, opts)
 
+        # create continuous and discrete dynamics
+        self.f_cont = ca.Function('f_cont', [x, u], [x_dot])
+        self.f_disc = ca.Function('f_disc', [x, u], [self.I(x0=x, p=u)['xf']])
+
 
     def animateSimulation(self, x_trajectory, u_trajectory, num_agents:int=1, additional_lines_or_scatters=None):
         wheel_long_axis = 0.4

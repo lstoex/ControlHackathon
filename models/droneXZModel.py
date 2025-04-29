@@ -48,6 +48,9 @@ class DroneXZModel(BaseModel):
         self.A_disc_func = ca.Function('A_disc_func', [x, u], [ca.jacobian(self.I(x0=x, p=u)['xf'], x)])
         self.B_disc_func = ca.Function('B_disc_func', [x, u], [ca.jacobian(self.I(x0=x, p=u)['xf'], u)])
 
+        # create continuous and discrete dynamics
+        self.f_cont = ca.Function('f_cont', [x, u], [x_dot])
+        self.f_disc = ca.Function('f_disc', [x, u], [self.I(x0=x, p=u)['xf']])
 
     def linearizeContinuousDynamics(self, x, u):
         A = self.A_func(x, u).full()

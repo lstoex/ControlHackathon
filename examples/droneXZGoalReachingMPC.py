@@ -54,7 +54,7 @@ class DroneXZGoalReachingCtrl:
         self._lbg.append(np.zeros(self._model.model_config.nx,))
         self._ubg.append(np.zeros(self._model.model_config.nx,))
         for i in range(self._ctrl_config.n_hrzn):
-            self._g.append(self._x_opt[:, i+1] - self._model.I(x0=self._x_opt[:, i], p=self._u_opt[:, i])['xf'])
+            self._g.append(self._x_opt[:, i+1] - self._model.f_disc(self._x_opt[:, i], self._u_opt[:, i]))
             self._lbg.append(np.zeros(self._model.model_config.nx,))
             self._ubg.append(np.zeros(self._model.model_config.nx,))
         return

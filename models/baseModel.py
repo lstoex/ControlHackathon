@@ -1,4 +1,5 @@
 from collections.abc import Callable
+import casadi as ca
 import numpy as np
 
 class BaseModel:
@@ -8,6 +9,14 @@ class BaseModel:
 
     def __init__(self, sampling_time: float):
         self._sampling_time = sampling_time
+
+
+        self.f_cont: ca.Function = None
+        """ Casadi Function for the rhs f(x,u) of the continuous dynamics \dot x = f(x,u). Use .full() to cast the result to a numpy array. """
+        self.f_disc: ca.Function = None
+        """ Casadi Function for the rhs f(x,u) of the discrete dynamics x_{k+1} = F(x_k, u_k) 
+        from an RK4 integrator, which use the piecewise constant control u_k over the interval specified by 'sampling time'.
+          Use .full() to cast the result to a numpy array. """
 
     def animateSimulation(self, x_trajectory: np.ndarray, u_trajectory: np.ndarray):
         raise NotImplementedError("Subclasses must implement animateSimulation.")
@@ -23,7 +32,7 @@ class BaseModel:
             u = controller(x_trajectory[:, i])
             u_trajectory[:, i] = u
             for i_agent in range(num_agents):
-                x_trajectory[i_agent*nx:(i_agent+1)*nx, i+1] = self.I(x0=x_trajectory[i_agent*nx:(i_agent+1)*nx, i], p=u[i_agent*nu:(i_agent+1)*nu])['xf'].full().flatten()
+                x_trajectory[i_agent*nx:(i_agent+1)*nx, i+1] = self.f_disc(x_trajectory[i_agent*nx:(i_agent+1)*nx, i], u[i_agent*nu:(i_agent+1)*nu]).full().flatten()
             print(f"Step {i+1}: x = {x_trajectory[:, i+1]}, u = {u}")
         return x_trajectory, u_trajectory
 
@@ -36,6 +45,6 @@ class BaseModel:
         x_trajectory[:, 0] = x_init.flatten()
         for i in range(sim_length):
             for i_agent in range(num_agents):
-                x_trajectory[i_agent*nx:(i_agent+1)*nx, i+1] = self.I(x0=x_trajectory[i_agent*nx:(i_agent+1)*nx, i], p=u_trajectory[i_agent*nu:(i_agent+1)*nu, i])['xf'].full().flatten()
+                x_trajectory[i_agent*nx:(i_agent+1)*nx, i+1] = self.f_disc(x_trajectory[i_agent*nx:(i_agent+1)*nx, i], u_trajectory[i_agent*nu:(i_agent+1)*nu, i]).full().flatten()
             print(f"Step {i+1}: x = {x_trajectory[:, i+1]}, u = {u_trajectory[:, i]}")
         return x_trajectory
