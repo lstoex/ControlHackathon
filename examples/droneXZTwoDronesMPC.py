@@ -17,14 +17,14 @@ import models.droneXZModel as droneXZModel
 class TwoDronesCtrlConfig:
     max_fl: float = 15.0
     max_fr: float = 15.0
-    fixed_distance: float = 1.0  # Desired distance between drones
+    fixed_distance: float = 0.1  # Desired distance between drones
     n_drones: int = 2
 
     Q: np.ndarray = field(default_factory=lambda: np.diag([1.0, 1.0, 0.1, 0.1, 1.0, 0.1]))
     Q_e: np.ndarray = field(default_factory=lambda: np.diag([10.0, 10.0, 1.0, 1.0, 10.0, 1.0]))
     R: np.ndarray = field(default_factory=lambda: np.diag([0.01, 0.01]))
-    Q_dist: float = 100.0  # Weight for distance constraint
-    n_hrzn = 5
+    Q_dist: float = 10.0  # Weight for distance constraint
+    n_hrzn = 10
 
 
 class DroneXZTwoDronesCtrl:
@@ -38,12 +38,12 @@ class DroneXZTwoDronesCtrl:
 
     def _define_ocp_variables(self):
         # State variables for both drones
-        self._x_opt = ca.MX.sym('x', self._ctrl_config.n_drones * self._model.model_config.nx, self._ctrl_config.n_hrzn+1)
+        self._x_opt = ca.SX.sym('x', self._ctrl_config.n_drones * self._model.model_config.nx, self._ctrl_config.n_hrzn+1)
         # Control variables for both drones
-        self._u_opt = ca.MX.sym('u', self._ctrl_config.n_drones * self._model.model_config.nu, self._ctrl_config.n_hrzn)
+        self._u_opt = ca.SX.sym('u', self._ctrl_config.n_drones * self._model.model_config.nu, self._ctrl_config.n_hrzn)
         # Parameters: initial state and goal positions
-        self._x_0_param = ca.MX.sym('x_0', self._ctrl_config.n_drones * self._model.model_config.nx)
-        self._goal_param = ca.MX.sym('goal', 2 * self._ctrl_config.n_drones)  # [x1, z1, x2, z2]
+        self._x_0_param = ca.SX.sym('x_0', self._ctrl_config.n_drones * self._model.model_config.nx)
+        self._goal_param = ca.SX.sym('goal', 2 * self._ctrl_config.n_drones)  # [x1, z1, x2, z2]
 
     def _setup_constraints(self):
         self._g = []
@@ -95,7 +95,21 @@ class DroneXZTwoDronesCtrl:
             squared_distance = dx**2 + dy**2
             self._g.append(squared_distance)
             self._lbg.append(self._ctrl_config.fixed_distance**2)
-            self._ubg.append(self._ctrl_config.fixed_distance**2)
+            self._ubg.append(np.inf)
+
+        # Add terminal velocity constraints to prevent overshooting
+        nx = self._model.model_config.nx
+        # Drone 1 terminal velocity constraints
+        self._g.append(self._x_opt[2, -1])  # vx1
+        self._g.append(self._x_opt[3, -1])  # vz1
+        self._lbg.extend([-0.1, -0.1])  # Small terminal velocities
+        self._ubg.extend([0.1, 0.1])
+        
+        # Drone 2 terminal velocity constraints
+        self._g.append(self._x_opt[nx+2, -1])  # vx2
+        self._g.append(self._x_opt[nx+3, -1])  # vz2
+        self._lbg.extend([-0.1, -0.1])  # Small terminal velocities
+        self._ubg.extend([0.1, 0.1])
 
     def _setup_obj_func(self):
         self._J = 0.0
@@ -118,14 +132,14 @@ class DroneXZTwoDronesCtrl:
             self._J += (self._u_opt[2:, i] - u_equilibrium).T @ self._ctrl_config.R @ (self._u_opt[2:, i] - u_equilibrium)
             
             # Distance maintenance cost (using squared distance)
-            pos1 = self._x_opt[:2, i]
-            pos2 = self._x_opt[nx:nx+2, i]
-            dx = pos1[0] - pos2[0]
-            dy = pos1[1] - pos2[1]
-            squared_distance = dx**2 + dy**2
-            self._J += self._ctrl_config.Q_dist * (squared_distance - self._ctrl_config.fixed_distance**2)**2
+            # pos1 = self._x_opt[:2, i]
+            # pos2 = self._x_opt[nx:nx+2, i]
+            # dx = pos1[0] - pos2[0]
+            # dy = pos1[1] - pos2[1]
+            # squared_distance = dx**2 + dy**2
+            # self._J += self._ctrl_config.Q_dist * (squared_distance - self._ctrl_config.fixed_distance**2)**2
 
-        # Terminal costs
+        # Terminal costs with higher weights
         self._J += (self._x_opt[:nx, -1] - x1_goal).T @ self._ctrl_config.Q_e @ (self._x_opt[:nx, -1] - x1_goal)
         self._J += (self._x_opt[nx:, -1] - x2_goal).T @ self._ctrl_config.Q_e @ (self._x_opt[nx:, -1] - x2_goal)
 
@@ -181,7 +195,7 @@ class DroneXZTwoDronesCtrl:
 
 def main():
     sampling_time = 0.05
-    sim_length = 10
+    sim_length = 70
     
     # Initial states for both drones
     x1_init = np.array([0.0, 0.0, 0.0, 0.0, 0.0, 0.0])
